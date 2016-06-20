@@ -8,7 +8,6 @@
 	<modules>
 		<module>headfirst</module>
 		<module>guava</module>
-		<module>alert</module>
 		<module>sparkanalysis</module>
 		<module>algorithm</module>
 	</modules>
