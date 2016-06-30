@@ -22,7 +22,14 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     }
 
     public BinaryHeap(T[] array) {
-        this.array = array;
+        currentSize = array.length;
+        array = (T[]) new Comparable[(currentSize+2)*11/10];
+        int i = 1;
+        for(T item:array){
+            array[i++] = item;
+        }
+
+        buildHeap();
     }
 
 
@@ -58,11 +65,23 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 
 
     private void percolateDown(int hole){
-
+        int child;
+        T tmp = array[hole];
+        for(; hole * 2 <= currentSize;hole = child){
+            child = hole * 2;
+            if(child != currentSize && array[child=1].compareTo(array[child]) < 0) child++;
+            if(array[child].compareTo(tmp) < 0 ){
+                array[hole] = array[child];
+            }else{
+                break;
+            }
+        }
     }
 
     private void buildHeap(){
-
+        for(int i = currentSize / 2;i > 0;i--){
+            percolateDown(i);
+        }
     }
 
     private void enlargeArray(int newSize){
