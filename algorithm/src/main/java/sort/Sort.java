@@ -22,6 +22,24 @@ public class Sort {
         }
     }
 
+
+    private static <T extends Comparable<? super T>> void mergeSort(T[] a, T[] tmp,int left, int right){
+        if(left < right){
+            int center = (left + right)/2;
+            mergeSort(a,tmp,left,center);
+            mergeSort(a,tmp,center + 1,right);
+            merge(a,tmp,left, center + 1,right);
+        }
+    }
+
+
+    private static <T extends Comparable<? super T>> void merge(T[] a,T[] tmp,int leftPos,int rightPos,int rightEnd){
+        int leftEnd = rightPos - 1;
+        int tmpPos = leftPos;
+        int numElements = rightEnd - leftPos + 1;
+
+    }
+
     /**
      * 希尔排序
      * @param a
