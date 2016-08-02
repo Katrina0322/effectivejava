@@ -17,6 +17,7 @@ public class BufferedInputFile {
             sb.append(s + "\n");
         }
         in.close();
+
         return sb.toString();
     }
 
@@ -29,7 +30,7 @@ public class BufferedInputFile {
 
         String className = BufferedInputFile.class.getName();
         String classNamePath = className.replace(".", "/") + ".class";
-        System.out.println(BufferedInputFile.class.getName());
+        System.out.println(classNamePath);
         System.out.println(BufferedInputFile.class.getClassLoader().getResource("."));
 //        File directory = new File("");
 //        System.out.println(directory.getAbsolutePath());
