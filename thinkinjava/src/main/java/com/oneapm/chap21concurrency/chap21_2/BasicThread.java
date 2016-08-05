@@ -1,13 +1,13 @@
-package com.oneapm.chap21concurrency;
+package com.oneapm.chap21concurrency.chap21_2;
 
 /**
  * used to
  * Created by tianjin on 8/3/16.
  */
-public class MainThread {
+public class BasicThread {
     public static void main(String[] args) {
-        LiftOff launch = new LiftOff();
-        launch.run();
+        Thread thread = new Thread(new LiftOff());
+        thread.start();
         System.out.println("waiting for liftoff!");
     }
 }
