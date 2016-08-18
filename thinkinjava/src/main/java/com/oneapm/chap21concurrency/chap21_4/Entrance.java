@@ -46,5 +46,8 @@ public class Entrance implements Runnable {
                 System.out.println("sleep interrupted");
             }
         }
+        System.out.println("Stopping " + this);
     }
+
+
 }
