@@ -11,6 +11,7 @@
 		<module>sparkanalysis</module>
 		<module>algorithm</module>
 		<module>thinkinjava</module>
+		<module>concurrency</module>
 	</modules>
 	<packaging>pom</packaging>
 
