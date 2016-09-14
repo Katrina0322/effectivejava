@@ -12,6 +12,7 @@
 		<module>algorithm</module>
 		<module>thinkinjava</module>
 		<module>concurrency</module>
+		<module>leetcode</module>
 	</modules>
 	<packaging>pom</packaging>
 
