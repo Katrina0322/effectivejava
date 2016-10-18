@@ -1,0 +1,46 @@
+curl -XPUT http://localhost:9200/_template/ni-database-template -d '
+{
+        "template":"ni-database-*",
+        "settings":{
+                "index.number_of_replicas":"0"
+        },
+        "mappings":{
+                "_default_":{
+                        "_all":{
+                                "enabled":false,
+                                "norms":{
+                                        "enabled":false
+                                }
+
+                        },
+                        "dynamic_templates":[
+                                {
+                                        "template1":{
+                                                "mapping":{
+                                                        "doc_values":true,
+                                                        "ignore_above":1024,
+                                                        "index":"not_analyzed",
+                                                        "type":"{dynamic_type}"
+                                                },
+                                                "match":"*"
+                                        }
+
+                                }
+
+                        ],
+                        "properties":{
+                            "timeStart":{
+                                    "type":"date"
+                            }
+                        }
+
+                }
+
+        }
+
+}'
+
+
+
+
+
