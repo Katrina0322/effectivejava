@@ -1,0 +1,32 @@
+#spark master
+#spark.master=spark://10.128.9.201:7077
+spark.master=local[2]
+#spark cores
+spark.cores=2
+#spark memory
+spark.memory=2G
+
+#spark cp dir
+#spark.checkpoint.dir=hdfs://10.128.9.220:9000/checkpoint/alert
+spark.checkpoint.dir=./checkpoint
+#结果 es的ip
+es.node=10.128.9.220
+
+cluster.name=knowops
+group.id=ni-database2
+
+#统计时间窗口（单位：秒）
+time.window=60
+#日志topic名列表(现在支持knowops以逗号分隔)
+topic.list=ni-db
+#kafaka的zookeeper地址
+bootstrap.server=10.128.9.220:9092
+kafaka.zoo=10.128.9.220:2181
+
+datafile=resources/database.txt
+sleep.time=1000
+ni.compress.cron=0 30 0 * * ?
+
+
+#ipip数据库查询服务udpport
+ipip.udpport=1000
