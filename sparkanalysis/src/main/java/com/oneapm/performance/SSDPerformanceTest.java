@@ -1,6 +1,5 @@
 package com.oneapm.performance;
 
-import base.Analysis;
 import com.google.common.collect.ImmutableMap;
 import com.oneapm.javabean.DBData;
 import com.oneapm.javabean.DBKey;
@@ -10,6 +9,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.storage.StorageLevel;
 import org.apache.spark.streaming.api.java.JavaPairReceiverInputDStream;
 import org.elasticsearch.hadoop.cfg.ConfigurationOptions;
 import org.elasticsearch.spark.rdd.api.java.JavaEsSpark;
@@ -20,16 +20,14 @@ import scala.Tuple2;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * used to
  * Created by tianjin on 10/18/16.
  */
 public class SSDPerformanceTest extends Analysis{
-    public static final Logger LOG = LoggerFactory.getLogger(SSDPerformanceTest.class);
 
-    protected static final Pattern TAB = Pattern.compile("\t");
+    public static final Logger LOG = LoggerFactory.getLogger(SSDPerformanceTest.class);
 
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
 
@@ -155,7 +153,7 @@ public class SSDPerformanceTest extends Analysis{
                         builder.put("slowCount",dbData.getSlowCount());
                         return builder.build();
                     }
-                }).cache();
+                }).persist(StorageLevel.MEMORY_AND_DISK_2() );
 
 
                 if (es != null) {

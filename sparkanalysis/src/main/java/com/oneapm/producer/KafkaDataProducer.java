@@ -16,31 +16,60 @@ import java.util.Properties;
  * used to
  * Created by tianjin on 10/18/16.
  */
-public class KafkaDataProducer {
+public class KafkaDataProducer implements Runnable{
     private static Logger log = Logger.getLogger(KafkaDataProducer.class);
 
     private static Producer<String, String> producer;
 
+    private String topic;
+
+    private String path;
+
     public KafkaDataProducer() {
         Properties props = new Properties();
         props.put("bootstrap.servers", Config.getConfig("database.cnf").getProperty("bootstrap.server"));
-//        props.put("metadata.broker.list", Config.getConfig("database.cnf").getProperty("kafaka.zoo"));
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         producer = new KafkaProducer<>(props);
     }
 
-    private void produce() throws Exception {
+    public KafkaDataProducer(String topic, String path) {
+        this.path = path;
+        this.topic = topic;
+
+        Properties props = new Properties();
+        props.put("bootstrap.servers", Config.getConfig("database.cnf").getProperty("bootstrap.server"));
+        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        producer = new KafkaProducer<>(props);
+    }
+
+
+
+    public static void main(String[] args) throws Exception {
+        KafkaDataProducer kafkaDataProducer1 = new KafkaDataProducer("test","datafile");
+        new Thread(kafkaDataProducer1).start();
+
+//        KafkaDataProducer kafkaDataProducer2 = new KafkaDataProducer("tcptest","tcp.file");
+//        new Thread(kafkaDataProducer2).start();
+//
+//        KafkaDataProducer kafkaDataProducer3 = new KafkaDataProducer("httptest","http.file");
+//        new Thread(kafkaDataProducer3).start();
+
+    }
+
+    @Override
+    public void run() {
         BufferedReader br = null;
         try {
             while ( true ) {
-                br = new BufferedReader(new FileReader(Config.getConfig("database.cnf").getProperty("datafile")));
+                br = new BufferedReader(new FileReader(Config.getConfig("database.cnf").getProperty(path)));
                 String line;
 
 
                 while ((line = br.readLine()) != null) {
                     if (!"".equals(line.trim())) {
-                        producer.send(new ProducerRecord<>("test", "", line));
+                        producer.send(new ProducerRecord<>(topic, "", line));
                     }
                 }
                 Thread.sleep(Long.valueOf(Config.getConfig("database.cnf").getProperty("sleep.time")));
@@ -56,10 +85,5 @@ public class KafkaDataProducer {
                 }
             }
         }
-
-    }
-
-    public static void main(String[] args) throws Exception {
-        new KafkaDataProducer().produce();
     }
 }
