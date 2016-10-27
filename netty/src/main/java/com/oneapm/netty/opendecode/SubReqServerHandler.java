@@ -13,17 +13,21 @@ public class SubReqServerHandler extends ChannelInboundHandlerAdapter {
         SubscribeReq req = (SubscribeReq) msg;
         if("TianJin".equalsIgnoreCase(req.getUserName())){
             System.out.println("Service accept client subscribe req:[" + req.toString() + "]");
-            ctx.writeAndFlush(msg);
+            ctx.writeAndFlush(resp(req.getSubReqId()));
         }
     }
 
-    private SubscribeReq resp(int subReqId){
-        SubscribeReq resp = new SubscribeReq();
+    private SubscribeResp resp(int subReqId){
+        SubscribeResp resp = new SubscribeResp();
+        resp.setSubReqId(subReqId);
+        resp.setRespCode(0);
+        resp.setDesc("Welcome to China");
         return resp;
     }
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        super.exceptionCaught(ctx, cause);
+        cause.printStackTrace();
+        ctx.close();
     }
 }
