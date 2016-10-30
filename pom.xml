@@ -14,6 +14,7 @@
 		<module>concurrency</module>
 		<module>leetcode</module>
 		<module>netty</module>
+		<module>protobuf-contract</module>
 	</modules>
 	<packaging>pom</packaging>
 

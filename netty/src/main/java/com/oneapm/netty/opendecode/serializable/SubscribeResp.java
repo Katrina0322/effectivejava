@@ -1,4 +1,4 @@
-package com.oneapm.netty.opendecode;
+package com.oneapm.netty.opendecode.serializable;
 
 import java.io.Serializable;
 
