@@ -12,31 +12,39 @@ import java.util.concurrent.TimeUnit;
 public class Entrance implements Runnable {
     private static Count count = new Count();
     private static List<Entrance> entrances = new ArrayList<>();
-    private int number = 0;
-    private final int id;
     private static volatile boolean canceled = false;
-    public static void cancel(){ canceled = true;}
+    private final int id;
+    private int number = 0;
 
     public Entrance(int id) {
         this.id = id;
         entrances.add(this);
     }
 
-    public synchronized int getValue(){ return number;}
+    public static void cancel() {
+        canceled = true;
+    }
 
-    public static int getTotalCount(){ return count.value();}
+    public static int getTotalCount() {
+        return count.value();
+    }
 
-    public static int sumEntrances(){
+    public static int sumEntrances() {
         int sum = 0;
-        for(Entrance entrance:entrances){
+        for (Entrance entrance : entrances) {
             sum += entrance.getValue();
         }
         return sum;
     }
+
+    public synchronized int getValue() {
+        return number;
+    }
+
     @Override
     public void run() {
-        while (!canceled){
-            synchronized (this){
+        while (!canceled) {
+            synchronized (this) {
                 ++number;
             }
             System.out.println(this + " total:" + count.increment());

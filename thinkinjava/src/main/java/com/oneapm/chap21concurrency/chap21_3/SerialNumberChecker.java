@@ -13,28 +13,28 @@ public class SerialNumberChecker {
     private static CircularSet serials = new CircularSet(1000);
     private static ExecutorService exec = Executors.newCachedThreadPool();
 
-    static class SerialChecker implements Runnable{
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < SIZE; i++) {
+            exec.execute(new SerialChecker());
+        }
+        if (args.length > 0) {
+            TimeUnit.SECONDS.sleep(new Integer(args[0]));
+            System.out.println("No Duplicate Detected");
+            System.exit(0);
+        }
+    }
+
+    static class SerialChecker implements Runnable {
         @Override
         public void run() {
-            while (true){
+            while (true) {
                 int serial = SerialNumberGenerator.nextSerialNumber();
-                if(serials.contains(serial)){
+                if (serials.contains(serial)) {
                     System.out.println("Duplicate:" + serial);
                     System.exit(0);
                 }
                 serials.add(serial);
             }
-        }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        for(int i = 0; i < SIZE ; i++){
-            exec.execute(new SerialChecker());
-        }
-        if(args.length > 0){
-            TimeUnit.SECONDS.sleep(new Integer(args[0]));
-            System.out.println("No Duplicate Detected");
-            System.exit(0);
         }
     }
 }

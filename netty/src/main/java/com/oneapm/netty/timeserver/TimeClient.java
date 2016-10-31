@@ -21,15 +21,15 @@ public class TimeClient {
         try {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(workerGroup);
-            bootstrap.channel(NioSocketChannel.class).option(ChannelOption.SO_KEEPALIVE,true).handler(new ChannelInitializer<SocketChannel>() {
+            bootstrap.channel(NioSocketChannel.class).option(ChannelOption.SO_KEEPALIVE, true).handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
 //                    socketChannel.pipeline().addLast(new TimeClientHandler());
-                    socketChannel.pipeline().addLast(new TimeDecoder(),new TimeClientHandler());
+                    socketChannel.pipeline().addLast(new TimeDecoder(), new TimeClientHandler());
                 }
             });
 
-            ChannelFuture f = bootstrap.connect(host,port).sync();
+            ChannelFuture f = bootstrap.connect(host, port).sync();
             f.channel().closeFuture().sync();
         } finally {
             workerGroup.shutdownGracefully();

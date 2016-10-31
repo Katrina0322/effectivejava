@@ -1,25 +1,24 @@
 package leetcode.simple;
 
 
-
 /**
  * used to
  * Created by tianjin on 9/18/16.
  */
 public class Solution3 {
     public static int lengthOfLongestSubstring(String s) {
-        if(s == null || s.length() == 0) {
+        if (s == null || s.length() == 0) {
             return 0;
         }
         int len = 0;
         String res = "";
-        for(char c:s.toCharArray()){
+        for (char c : s.toCharArray()) {
             int index = res.indexOf(c);
             if (index == -1) {
                 res += c;
-                len = Math.max(len,res.length());
+                len = Math.max(len, res.length());
             } else {
-                res = res.substring(index+1);
+                res = res.substring(index + 1);
                 res += c;
             }
         }

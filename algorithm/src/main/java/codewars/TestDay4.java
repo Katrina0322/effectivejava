@@ -38,11 +38,11 @@ public class TestDay4 {
         int[][] triangle = new int[depth][];
 
         for (int i = 0; i < depth; i++) {
-            triangle[i] = new int[i+1];
+            triangle[i] = new int[i + 1];
             triangle[i][0] = 1;
             triangle[i][i] = 1;
             for (int j = 1; j < i; j++) {
-                triangle[i][j] = triangle[i-1][j] + triangle[i-1][j-1];
+                triangle[i][j] = triangle[i - 1][j] + triangle[i - 1][j - 1];
             }
         }
         return triangle;
@@ -50,14 +50,14 @@ public class TestDay4 {
 
 
     public static boolean scramble(String str1, String str2) {
-        while(str2.length()>0){
+        while (str2.length() > 0) {
             String c = str2.charAt(0) + "";
             int len1 = str1.length();
             int len2 = str2.length();
-            str1 = str1.replaceAll(c,"");
-            str2 = str2.replaceAll(c,"");
+            str1 = str1.replaceAll(c, "");
+            str2 = str2.replaceAll(c, "");
 
-            if((len1 - str1.length()) < (len2 - str2.length())) return false;
+            if ((len1 - str1.length()) < (len2 - str2.length())) return false;
         }
         return true;
     }
@@ -66,10 +66,10 @@ public class TestDay4 {
     public static double going(int n) {
         BigDecimal sum = BigDecimal.valueOf(0);
         BigDecimal an = BigDecimal.valueOf(1);
-        for(int i = 1;i <= n;i++){
-            an=an.multiply(BigDecimal.valueOf(i));
-            sum=sum.add(an);
+        for (int i = 1; i <= n; i++) {
+            an = an.multiply(BigDecimal.valueOf(i));
+            sum = sum.add(an);
         }
-        return sum.divide(an,6,BigDecimal.ROUND_FLOOR).doubleValue();
+        return sum.divide(an, 6, BigDecimal.ROUND_FLOOR).doubleValue();
     }
 }

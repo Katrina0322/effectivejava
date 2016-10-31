@@ -23,7 +23,7 @@ public class Solution {
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
             if (map.containsKey(complement)) {
-                return new int[] { map.get(complement), i };
+                return new int[]{map.get(complement), i};
             }
             map.put(nums[i], i);
         }
@@ -31,9 +31,8 @@ public class Solution {
     }
 
 
-
     public static void main(String[] args) {
-        int[] pre = {3,2,4};
-        System.out.println(twoSum(pre,6)[0] + "--" + twoSum(pre,6)[1]);
+        int[] pre = {3, 2, 4};
+        System.out.println(twoSum(pre, 6)[0] + "--" + twoSum(pre, 6)[1]);
     }
 }

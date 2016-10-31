@@ -1,7 +1,6 @@
 package observer;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * observer of head first design pattern

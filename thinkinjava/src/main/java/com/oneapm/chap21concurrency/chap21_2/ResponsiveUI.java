@@ -14,15 +14,15 @@ public class ResponsiveUI extends Thread {
         start();
     }
 
-    public void run(){
-        while(true){
-            d  = d + (Math.PI + Math.E) / d;
-        }
-    }
-
     public static void main(String[] args) throws IOException {
         new ResponsiveUI();
         System.in.read();
         System.out.println(d);
+    }
+
+    public void run() {
+        while (true) {
+            d = d + (Math.PI + Math.E) / d;
+        }
     }
 }

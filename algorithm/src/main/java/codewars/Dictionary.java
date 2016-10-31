@@ -51,17 +51,15 @@ public class Dictionary {
 //        }
         Double end = n.doubleValue();
         Double abs = Math.abs(end);
-        if(end >= 0 || abs%2 != 0) {
+        if (end >= 0 || abs % 2 != 0) {
             return BigInteger.valueOf((long) ((Math.pow((1 + Math.sqrt(5)) / 2, end) - Math.pow((1 - Math.sqrt(5)) / 2, end)) / Math.sqrt(5)));
-        }
-        else{
+        } else {
             return BigInteger.valueOf((long) (-(Math.pow((1 + Math.sqrt(5)) / 2, abs) - Math.pow((1 - Math.sqrt(5)) / 2, abs)) / Math.sqrt(5)));
         }
     }
 
 
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         BigInteger n = fib(BigInteger.valueOf(-1000));
         System.out.println(n);
     }

@@ -8,7 +8,7 @@ import java.nio.channels.CompletionHandler;
  * used to
  * Created by tianjin on 10/14/16.
  */
-public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSocketChannel,AsyncTimeServerHandler> {
+public class AcceptCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, AsyncTimeServerHandler> {
     @Override
     public void completed(AsynchronousSocketChannel result, AsyncTimeServerHandler attachment) {
         attachment.asynchronousServerSocketChannel.accept(attachment, this);

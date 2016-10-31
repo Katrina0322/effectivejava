@@ -6,7 +6,7 @@ package codewars;
 public class Line {
 
     public static String WhoIsNext(String[] names, int n) {
-        if(n > 1000000000 || n < 1) return null;
+        if (n > 1000000000 || n < 1) return null;
 
         /**
          * 我第一次写的,运行时间太长
@@ -30,12 +30,12 @@ public class Line {
         /**
          * 第二次写的,超级快
          */
-        if( n <= 5 ) return names[n-1];
-        int a = (int)(Math.log(n/5+1)/ Math.log(2));
+        if (n <= 5) return names[n - 1];
+        int a = (int) (Math.log(n / 5 + 1) / Math.log(2));
         System.out.println(a);
-        int b = (int) (n - 5*(Math.pow(2,a)-1));
+        int b = (int) (n - 5 * (Math.pow(2, a) - 1));
         System.out.println(b);
-        return names[b/((int)Math.pow(2,a))];
+        return names[b / ((int) Math.pow(2, a))];
 
         /**
          * 别人用循环写的,想法很好

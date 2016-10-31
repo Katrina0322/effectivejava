@@ -14,7 +14,7 @@ public class WaxOff implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.interrupted()){
+        while (!Thread.interrupted()) {
             try {
                 car.waitingForWaxd();
                 System.out.println("Wax Off");

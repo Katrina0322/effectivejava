@@ -18,31 +18,6 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 public class HttpFileServer {
     private static final String DEFAULT_URL = "/netty/src/main/java/com/oneapm/netty/";
 
-    public void run(final int port,final String url) throws InterruptedException {
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
-        try {
-            ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast("http-decoder",new HttpRequestDecoder());
-                    ch.pipeline().addLast("http-aggregator",new HttpObjectAggregator(65536));
-                    ch.pipeline().addLast("http-encoder",new HttpResponseEncoder());
-                    ch.pipeline().addLast("http-chunked",new ChunkedWriteHandler());
-                    ch.pipeline().addLast("fileServerHandler",new HttpFileServerHandler(url));
-                }
-            });
-            ChannelFuture future = bootstrap.bind("localhost", port).sync();
-            System.out.println("HTTP文件目录服务器启动，网址是 : " + "http://localhost:"
-                    + port + url);
-            future.channel().closeFuture().sync();
-        } finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
-        }
-    }
-
     public static void main(String[] args) throws Exception {
         int port = 8080;
         if (args.length > 0) {
@@ -58,4 +33,28 @@ public class HttpFileServer {
         new HttpFileServer().run(port, url);
     }
 
+    public void run(final int port, final String url) throws InterruptedException {
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try {
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addLast("http-decoder", new HttpRequestDecoder());
+                    ch.pipeline().addLast("http-aggregator", new HttpObjectAggregator(65536));
+                    ch.pipeline().addLast("http-encoder", new HttpResponseEncoder());
+                    ch.pipeline().addLast("http-chunked", new ChunkedWriteHandler());
+                    ch.pipeline().addLast("fileServerHandler", new HttpFileServerHandler(url));
+                }
+            });
+            ChannelFuture future = bootstrap.bind("localhost", port).sync();
+            System.out.println("HTTP文件目录服务器启动，网址是 : " + "http://localhost:"
+                    + port + url);
+            future.channel().closeFuture().sync();
+        } finally {
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
+    }
 }

@@ -5,7 +5,7 @@ package com.oneapm.chap9;
  * Created by tianjin on 8/1/16.
  */
 public class NestingInterfaces {
-    public class BImp implements A.B{
+    public class BImp implements A.B {
 
         @Override
         public void f() {
@@ -13,7 +13,7 @@ public class NestingInterfaces {
         }
     }
 
-    class CImp implements A.C{
+    class CImp implements A.C {
         @Override
         public void f() {
 
@@ -28,14 +28,14 @@ public class NestingInterfaces {
 //    }
 
 
-    class EImp implements E{
+    class EImp implements E {
         @Override
         public void g() {
 
         }
     }
 
-    class EGImp implements E.G{
+    class EGImp implements E.G {
 
         @Override
         public void f() {

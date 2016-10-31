@@ -14,7 +14,7 @@ public class TimeDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        if(byteBuf.readableBytes() < 4){
+        if (byteBuf.readableBytes() < 4) {
             return;
         }
         list.add(byteBuf.readBytes(4));

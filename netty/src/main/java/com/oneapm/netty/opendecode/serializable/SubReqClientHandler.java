@@ -14,9 +14,10 @@ import java.util.List;
 public class SubReqClientHandler extends ChannelInboundHandlerAdapter {
     public SubReqClientHandler() {
     }
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        for( int i = 0 ; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
             ctx.write(subReq(i));
         }
         ctx.flush();
@@ -34,10 +35,11 @@ public class SubReqClientHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * protobuf
+     *
      * @param i
      * @return
      */
-    private SubscribeReqProto.SubscribeReq subReq(int i){
+    private SubscribeReqProto.SubscribeReq subReq(int i) {
         SubscribeReqProto.SubscribeReq.Builder req = SubscribeReqProto.SubscribeReq.newBuilder();
         List<String> address = new ArrayList<>();
         address.add("NanJing");

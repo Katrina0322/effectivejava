@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * Created by tianjin on 8/4/16.
  */
 public class CriticalSection {
-    static void testApproaches(PairManager pman1,PairManager pman2){
+    static void testApproaches(PairManager pman1, PairManager pman2) {
         ExecutorService exec = Executors.newCachedThreadPool();
         PairManipulator
                 pm1 = new PairManipulator(pman1),
@@ -35,6 +35,6 @@ public class CriticalSection {
         PairManager
                 pm1 = new PairManager1(),
                 pm2 = new PairManager2();
-        testApproaches(pm1,pm2);
+        testApproaches(pm1, pm2);
     }
 }

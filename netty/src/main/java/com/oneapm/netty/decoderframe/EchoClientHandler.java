@@ -8,16 +8,15 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * Created by spark on 10/25/16.
  */
 public class EchoClientHandler extends ChannelInboundHandlerAdapter {
-    private int counter;
-
     static final String ECHO_REQ = "Hi,welcome to netty.$_";
+    private int counter;
 
     public EchoClientHandler() {
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        for( int i = 0 ; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
             ctx.writeAndFlush(Unpooled.copiedBuffer(ECHO_REQ.getBytes()));
         }
     }

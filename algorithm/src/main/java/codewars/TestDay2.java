@@ -9,34 +9,34 @@ import java.util.ArrayList;
  */
 public class TestDay2 {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
 
     }
 
 
     public static String convertFrac(long[][] lst) {
-        if(lst.length == 0){
+        if (lst.length == 0) {
             return "";
         }
         ArrayList<Long> arrays = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
-        for(int i = 0; i < lst.length; i++){
-            if(lst[i][1] > 0) {
+        for (int i = 0; i < lst.length; i++) {
+            if (lst[i][1] > 0) {
                 arrays.add(lst[i][1]);
             }
         }
         long result = arrays.get(0);
-        for(int i = 1; i < arrays.size() ; i ++){
-            long x = result ;
+        for (int i = 1; i < arrays.size(); i++) {
+            long x = result;
             long y = arrays.get(i);
-            while(true){
+            while (true) {
                 if (0 == (y %= x)) {
-                    result = result*arrays.get(i)/x;
+                    result = result * arrays.get(i) / x;
                     break;
                 }
-                if(0 == (x %= y)){
-                    result = result*arrays.get(i)/y;
+                if (0 == (x %= y)) {
+                    result = result * arrays.get(i) / y;
                     break;
                 }
             }
@@ -62,29 +62,28 @@ public class TestDay2 {
 //            }
 //        }
         System.out.println(result);
-        for(int i = 0; i < lst.length; i++){
+        for (int i = 0; i < lst.length; i++) {
             sb.append("(" + (result / lst[i][1] * lst[i][0]) + "," + result + ")");
         }
         return sb.toString();
     }
 
 
-
     public static int zeros(int n) {
-        if(n == 0) return 0;
+        if (n == 0) return 0;
 
-        BigInteger factorial  = BigInteger.valueOf(1);
-        for(int i =1;i <= n;i++){
-            factorial = factorial.multiply(BigInteger.valueOf((long)i));
+        BigInteger factorial = BigInteger.valueOf(1);
+        for (int i = 1; i <= n; i++) {
+            factorial = factorial.multiply(BigInteger.valueOf((long) i));
         }
         System.out.println(factorial);
         int count = 0;
         String s = factorial.toString();
 
-        for(int i = s.length()-1; i >= 0;i--){
-            if(Integer.parseInt(String.valueOf(s.charAt(i)))==0){
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (Integer.parseInt(String.valueOf(s.charAt(i))) == 0) {
                 count++;
-            }else{
+            } else {
                 break;
             }
         }

@@ -14,7 +14,7 @@ public class WaxOn implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.interrupted()){
+        while (!Thread.interrupted()) {
             System.out.println("Wax On");
             try {
                 TimeUnit.MILLISECONDS.sleep(200);

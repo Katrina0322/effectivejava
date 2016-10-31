@@ -11,24 +11,24 @@ import java.util.List;
 public class Solution4 {
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
         List<Integer> list = new ArrayList<>();
-        for(int a:nums1){
+        for (int a : nums1) {
             list.add(a);
         }
 
-        for(int a:nums2){
+        for (int a : nums2) {
             list.add(a);
         }
 
         Collections.sort(list);
 
-        if(list.size() % 2 == 0){
+        if (list.size() % 2 == 0) {
             return (list.get(list.size() / 2 - 1) + list.get(list.size() / 2)) / 2.0;
-        }else{
+        } else {
             return list.get(list.size() / 2);
         }
     }
 
     public static void main(String[] args) {
-        System.out.println(findMedianSortedArrays(new int[]{1, 2},new int[]{3,4}));
+        System.out.println(findMedianSortedArrays(new int[]{1, 2}, new int[]{3, 4}));
     }
 }

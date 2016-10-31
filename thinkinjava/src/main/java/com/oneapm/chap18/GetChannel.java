@@ -1,8 +1,6 @@
 package com.oneapm.chap18;
 
 
-import org.apache.commons.lang3.CharSet;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +21,7 @@ public class GetChannel {
         fc.write(ByteBuffer.wrap("Some text ".getBytes()));
         fc.close();
 
-        fc = new RandomAccessFile("data.txt","rw").getChannel();
+        fc = new RandomAccessFile("data.txt", "rw").getChannel();
         fc.position(fc.size());
         fc.write(ByteBuffer.wrap("some more".getBytes()));
         fc.close();

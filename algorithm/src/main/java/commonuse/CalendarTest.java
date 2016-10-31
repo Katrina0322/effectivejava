@@ -31,7 +31,7 @@ public class CalendarTest {
 
         int minute = now2.get(Calendar.MINUTE);
 
-        now2.set(Calendar.MINUTE,minute / 5 * 5);
+        now2.set(Calendar.MINUTE, minute / 5 * 5);
 
         System.out.println(df.format(now2.getTime()));
 

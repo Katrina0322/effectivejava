@@ -16,6 +16,15 @@ public class SimplePriorities implements Runnable {
         this.priority = priority;
     }
 
+    public static void main(String[] args) {
+        ExecutorService exec = Executors.newCachedThreadPool();
+        for (int i = 0; i < 5; i++) {
+            exec.execute(new SimplePriorities(Thread.MIN_PRIORITY));
+        }
+        exec.execute(new SimplePriorities(Thread.MAX_PRIORITY));
+        exec.shutdown();
+    }
+
     @Override
     public String toString() {
         return Thread.currentThread() + ":" + countDown;
@@ -24,25 +33,15 @@ public class SimplePriorities implements Runnable {
     @Override
     public void run() {
         Thread.currentThread().setPriority(priority);
-        while(true){
-            for(int i = 1 ; i < 1000000 ; i++){
-                d += (Math.PI + Math.E) / (double)i;
-                if(i % 1000 == 0){
+        while (true) {
+            for (int i = 1; i < 1000000; i++) {
+                d += (Math.PI + Math.E) / (double) i;
+                if (i % 1000 == 0) {
                     Thread.yield();
                 }
             }
             System.out.println(this);
-            if(--countDown == 0) return;
+            if (--countDown == 0) return;
         }
-    }
-
-
-    public static void main(String[] args) {
-        ExecutorService exec = Executors.newCachedThreadPool();
-        for(int i = 0 ; i < 5 ; i++){
-            exec.execute(new SimplePriorities(Thread.MIN_PRIORITY));
-        }
-        exec.execute(new SimplePriorities(Thread.MAX_PRIORITY));
-        exec.shutdown();
     }
 }

@@ -24,6 +24,7 @@ public class MultiplexerTimeServer implements Runnable {
 
     /**
      * 初始化多路复用器,绑定监听端口
+     *
      * @param port
      */
     public MultiplexerTimeServer(int port) {
@@ -49,6 +50,7 @@ public class MultiplexerTimeServer implements Runnable {
 
     /**
      * 根据key的操作位获取网络事件的类型   TCP三次握手过程
+     *
      * @param key
      * @throws IOException
      */
@@ -64,23 +66,23 @@ public class MultiplexerTimeServer implements Runnable {
 
             }
 
-            if(key.isReadable()){
+            if (key.isReadable()) {
                 SocketChannel sc = (SocketChannel) key.channel();
                 //通过ByteBuffer读取客户端的请求信息   开辟1K的缓冲区
                 ByteBuffer readBuffer = ByteBuffer.allocate(1024);
                 int readBytes = sc.read(readBuffer);
-                if(readBytes > 0){
+                if (readBytes > 0) {
                     readBuffer.flip();
                     byte[] bytes = new byte[readBuffer.remaining()];
                     readBuffer.get(bytes);
-                    String body = new String(bytes,"UTF-8");
-                    System.out.println("The time server received order : " + body );
+                    String body = new String(bytes, "UTF-8");
+                    System.out.println("The time server received order : " + body);
                     String currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date(System.currentTimeMillis()).toString() : "BAD ORDER";
-                    doWrite(sc,currentTime);
-                }else if(readBytes < 0){
+                    doWrite(sc, currentTime);
+                } else if (readBytes < 0) {
                     key.cancel();
                     sc.close();
-                }else{
+                } else {
 
                 }
             }
@@ -89,12 +91,13 @@ public class MultiplexerTimeServer implements Runnable {
 
     /**
      * 通过ByteBuffer将应答消息异步发送给客户端
+     *
      * @param socketChannel
      * @param response
      * @throws IOException
      */
-    private void doWrite(SocketChannel socketChannel,String response) throws IOException {
-        if(response != null && response.trim().length() > 0){
+    private void doWrite(SocketChannel socketChannel, String response) throws IOException {
+        if (response != null && response.trim().length() > 0) {
             byte[] bytes = response.getBytes();
             ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
             writeBuffer.put(bytes);
@@ -119,9 +122,9 @@ public class MultiplexerTimeServer implements Runnable {
                     try {
                         handleInput(key);
                     } catch (IOException e) {
-                        if(key != null){
+                        if (key != null) {
                             key.cancel();
-                            if(key.channel() != null){
+                            if (key.channel() != null) {
                                 key.channel().close();
                             }
                         }

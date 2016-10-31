@@ -11,7 +11,7 @@ public class TestDay5 {
         for (long x = 1; x <= (int) Math.sqrt(n); x++) {
             if (n % x == 0) {
                 long a = n / x;
-                if((a - x) % 4 == 0) stringBuilder.append(1 < stringBuilder.length() ? ", [" : "[").append((x + a) / 2 + ", " + (a - x) / 4 + "]");
+                if ((a - x) % 4 == 0) stringBuilder.append(1 < stringBuilder.length() ? ", [" : "[").append((x + a) / 2 + ", " + (a - x) / 4 + "]");
             }
         }
 

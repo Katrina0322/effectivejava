@@ -13,7 +13,7 @@ public class Accessor implements Runnable {
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()){
+        while (!Thread.currentThread().isInterrupted()) {
             ThreadLocalVariableHolder.increment();
             System.out.println(this);
             Thread.yield();

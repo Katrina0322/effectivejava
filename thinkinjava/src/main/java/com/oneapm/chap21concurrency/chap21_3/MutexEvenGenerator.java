@@ -10,6 +10,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MutexEvenGenerator extends IntGenerator {
     private int currentEvenValue = 0;
     private Lock lock = new ReentrantLock();
+
+    public static void main(String[] args) {
+        EvenChecker.test(new MutexEvenGenerator());
+    }
+
     @Override
     public int next() {
         lock.lock();
@@ -22,9 +27,5 @@ public class MutexEvenGenerator extends IntGenerator {
             lock.unlock();
         }
 
-    }
-
-    public static void main(String[] args) {
-        EvenChecker.test(new MutexEvenGenerator());
     }
 }

@@ -13,13 +13,13 @@ public class SeparateChainingHashTable<T> {
 
     private List<T>[] theLists;
 
-    private int myHash(T t){
+    private int myHash(T t) {
         int hashVal = t.hashCode();
 
         hashVal %= theLists.length;
 
-        if(hashVal < 0){
-            hashVal =+ theLists.length;
+        if (hashVal < 0) {
+            hashVal = +theLists.length;
         }
         return hashVal;
     }

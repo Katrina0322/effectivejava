@@ -2,7 +2,6 @@ package GuavaCollection;
 
 import com.google.common.collect.Sets;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -10,7 +9,7 @@ import java.util.Set;
  * Created by tianjin on 3/10/16.
  */
 public class CollectionUse {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         Set<String> collection = Sets.newHashSet();
         collection.add("nullable");

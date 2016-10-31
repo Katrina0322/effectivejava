@@ -16,7 +16,7 @@ import java.util.Properties;
  * used to
  * Created by tianjin on 10/18/16.
  */
-public class KafkaDataProducer implements Runnable{
+public class KafkaDataProducer implements Runnable {
     private static Logger log = Logger.getLogger(KafkaDataProducer.class);
 
     private static Producer<String, String> producer;
@@ -45,9 +45,8 @@ public class KafkaDataProducer implements Runnable{
     }
 
 
-
     public static void main(String[] args) throws Exception {
-        KafkaDataProducer kafkaDataProducer1 = new KafkaDataProducer("test","datafile");
+        KafkaDataProducer kafkaDataProducer1 = new KafkaDataProducer("test", "datafile");
         new Thread(kafkaDataProducer1).start();
 
 //        KafkaDataProducer kafkaDataProducer2 = new KafkaDataProducer("tcptest","tcp.file");
@@ -62,7 +61,7 @@ public class KafkaDataProducer implements Runnable{
     public void run() {
         BufferedReader br = null;
         try {
-            while ( true ) {
+            while (true) {
                 br = new BufferedReader(new FileReader(Config.getConfig("database.cnf").getProperty(path)));
                 String line;
 

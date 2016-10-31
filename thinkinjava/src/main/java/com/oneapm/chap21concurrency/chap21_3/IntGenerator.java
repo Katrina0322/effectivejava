@@ -7,12 +7,14 @@ package com.oneapm.chap21concurrency.chap21_3;
  */
 public abstract class IntGenerator {
     private volatile boolean canceled = false;
+
     public abstract int next();
-    public void cancel(){
+
+    public void cancel() {
         canceled = true;
     }
 
-    public boolean isCanceled(){
+    public boolean isCanceled() {
         return canceled;
     }
 }

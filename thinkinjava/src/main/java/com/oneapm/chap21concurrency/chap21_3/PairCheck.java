@@ -13,7 +13,7 @@ public class PairCheck implements Runnable {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             pairManager.checkCounter.incrementAndGet();
             pairManager.getP().checkState();
         }

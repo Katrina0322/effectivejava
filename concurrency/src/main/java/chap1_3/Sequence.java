@@ -8,9 +8,10 @@ import javax.annotation.concurrent.ThreadSafe;
  */
 @ThreadSafe
 public class Sequence {
-    @GuardedBy("this") private int value;
+    @GuardedBy("this")
+    private int value;
 
-    public synchronized int getValue(){
+    public synchronized int getValue() {
         return value++;
     }
 }

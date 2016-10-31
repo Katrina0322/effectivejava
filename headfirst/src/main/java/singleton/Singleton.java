@@ -6,11 +6,12 @@ package singleton;
 public class Singleton {
     private static Singleton uniqueInstance;
 
-    private Singleton(){}
+    private Singleton() {
+    }
 
     public static synchronized Singleton getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance =  new Singleton();
+            uniqueInstance = new Singleton();
         }
         return uniqueInstance;
     }

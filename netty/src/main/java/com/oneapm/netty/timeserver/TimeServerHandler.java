@@ -10,7 +10,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * used to
  * Created by tianjin on 10/24/16.
  */
-public class TimeServerHandler extends ChannelInboundHandlerAdapter{
+public class TimeServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(final ChannelHandlerContext ctx) throws Exception {
         ByteBuf time = ctx.alloc().buffer(4);

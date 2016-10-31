@@ -35,30 +35,30 @@ public class TimeClientHandler implements Runnable {
     }
 
     private void handleInput(SelectionKey key) throws IOException {
-        if(key.isValid()){
+        if (key.isValid()) {
             SocketChannel sc = (SocketChannel) key.channel();
-            if(key.isConnectable()){
-                if(sc.finishConnect()){
-                    sc.register(selector,SelectionKey.OP_READ);
+            if (key.isConnectable()) {
+                if (sc.finishConnect()) {
+                    sc.register(selector, SelectionKey.OP_READ);
                     doWrite(sc);
-                }else{
+                } else {
                     System.exit(1);
                 }
             }
-            if(key.isReadable()){
+            if (key.isReadable()) {
                 ByteBuffer readBuffer = ByteBuffer.allocate(1024);
                 int readBytes = sc.read(readBuffer);
-                if(readBytes > 0) {
+                if (readBytes > 0) {
                     readBuffer.flip();
                     byte[] bytes = new byte[readBuffer.remaining()];
                     readBuffer.get(bytes);
                     String body = new String(bytes, "UTF-8");
                     System.out.println("Now is " + body);
                     this.stop = true;
-                }else if(readBytes < 0){
+                } else if (readBytes < 0) {
                     key.cancel();
                     sc.close();
-                }else{
+                } else {
 
                 }
             }
@@ -71,17 +71,17 @@ public class TimeClientHandler implements Runnable {
         writeBuffer.put(req);
         writeBuffer.flip();
         sc.write(writeBuffer);
-        if(!writeBuffer.hasRemaining()){
+        if (!writeBuffer.hasRemaining()) {
             System.out.println("Send order 2 server succeed.");
         }
     }
 
     private void doConnect() throws IOException {
-        if(socketChannel.connect(new InetSocketAddress(host,port))){
-            socketChannel.register(selector,SelectionKey.OP_READ);
+        if (socketChannel.connect(new InetSocketAddress(host, port))) {
+            socketChannel.register(selector, SelectionKey.OP_READ);
             doWrite(socketChannel);
-        }else{
-            socketChannel.register(selector,SelectionKey.OP_CONNECT);
+        } else {
+            socketChannel.register(selector, SelectionKey.OP_CONNECT);
         }
     }
 
@@ -105,9 +105,9 @@ public class TimeClientHandler implements Runnable {
                     try {
                         handleInput(key);
                     } catch (IOException e) {
-                        if(key != null){
+                        if (key != null) {
                             key.cancel();
-                            if(key.channel() != null){
+                            if (key.channel() != null) {
                                 key.channel().close();
                             }
                         }
@@ -119,7 +119,7 @@ public class TimeClientHandler implements Runnable {
                 System.exit(1);
             }
         }
-        if(selector != null){
+        if (selector != null) {
             try {
                 selector.close();
             } catch (IOException e) {

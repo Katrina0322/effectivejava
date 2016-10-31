@@ -12,7 +12,7 @@ public class DateTest {
 
     public static void main(String[] args) throws ParseException {
         double a = 1463999309.7442591;
-        Date date = new Date((long)a*1000);
+        Date date = new Date((long) a * 1000);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat esFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

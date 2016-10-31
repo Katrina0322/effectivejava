@@ -13,7 +13,7 @@ public class PairManipulator implements Runnable {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             pairManager.increment();
         }
     }

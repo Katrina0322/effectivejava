@@ -24,18 +24,18 @@ public class TimeServerHandler implements Runnable {
         PrintWriter out = null;
         try {
             in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-            out = new PrintWriter(this.socket.getOutputStream(),true);
+            out = new PrintWriter(this.socket.getOutputStream(), true);
             String currentTime = null;
             String body = null;
-            while (true){
+            while (true) {
                 body = in.readLine();
-                if(body == null) break;
+                if (body == null) break;
                 System.out.println("The time server received body : " + body);
                 currentTime = "QUERY TIME ORDER".equalsIgnoreCase(body) ? new Date(System.currentTimeMillis()).toString() : "BAD ORDER";
                 out.println(currentTime);
             }
         } catch (IOException e) {
-            if(in != null){
+            if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e1) {
@@ -43,12 +43,12 @@ public class TimeServerHandler implements Runnable {
                 }
             }
 
-            if(out != null){
+            if (out != null) {
                 out.close();
                 out = null;
             }
 
-            if(this.socket != null){
+            if (this.socket != null) {
                 try {
                     this.socket.close();
                 } catch (IOException e1) {

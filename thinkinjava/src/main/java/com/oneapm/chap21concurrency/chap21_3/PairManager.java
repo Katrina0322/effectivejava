@@ -11,16 +11,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by tianjin on 8/4/16.
  */
 public abstract class PairManager {
-    AtomicInteger checkCounter = new AtomicInteger(0);
     protected Pair p = new Pair();
-
+    AtomicInteger checkCounter = new AtomicInteger(0);
     private List<Pair> storage = Collections.synchronizedList(new ArrayList<Pair>());
 
     public synchronized Pair getP() {
-        return new Pair(p.getX(),p.getY());
+        return new Pair(p.getX(), p.getY());
     }
 
-    protected void store(Pair p){
+    protected void store(Pair p) {
         storage.add(p);
         try {
             TimeUnit.MILLISECONDS.sleep(50);

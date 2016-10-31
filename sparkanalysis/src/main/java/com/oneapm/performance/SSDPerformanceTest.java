@@ -19,13 +19,16 @@ import scala.Tuple2;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * used to
  * Created by tianjin on 10/18/16.
  */
-public class SSDPerformanceTest extends Analysis{
+public class SSDPerformanceTest extends Analysis {
 
     public static final Logger LOG = LoggerFactory.getLogger(SSDPerformanceTest.class);
 
@@ -57,9 +60,9 @@ public class SSDPerformanceTest extends Analysis{
                         DBData dbData = new DBData();
                         String sqlString = new String(Base64.decodeBase64(database[10].trim()));
                         String storageSql;
-                        if(sqlString.length() > 1000){
-                            storageSql = sqlString.substring(0,1000);
-                        }else{
+                        if (sqlString.length() > 1000) {
+                            storageSql = sqlString.substring(0, 1000);
+                        } else {
                             storageSql = sqlString;
                         }
 
@@ -77,29 +80,29 @@ public class SSDPerformanceTest extends Analysis{
                         dbKey.setUser(database[2].trim());
                         dbKey.setSqlString(storageSql);
 
-                        if(!database[12].trim().equals("-")) {
+                        if (!database[12].trim().equals("-")) {
                             dbData.setOperateTime(Double.parseDouble(database[12].trim()));
-                        }else if(!database[7].trim().equals("-")){
+                        } else if (!database[7].trim().equals("-")) {
                             dbData.setOperateTime(Double.parseDouble(database[7].trim()) - Double.parseDouble(database[6].trim()));
-                        }else{
+                        } else {
                             dbData.setOperateTime(0);
                         }
 
-                        if(!database[13].trim().equals("-")) {
+                        if (!database[13].trim().equals("-")) {
                             dbData.setReqTransTime(Double.parseDouble(database[13].trim()));
-                        }else{
+                        } else {
                             dbData.setReqTransTime(0);
                         }
 
-                        if(!database[14].trim().equals("-")) {
+                        if (!database[14].trim().equals("-")) {
                             dbData.setRespTransTime(Double.parseDouble(database[14].trim()));
-                        }else{
+                        } else {
                             dbData.setRespTransTime(0);
                         }
 
-                        if(!database[15].trim().equals("-")) {
+                        if (!database[15].trim().equals("-")) {
                             dbData.setRespPayload(Integer.parseInt(database[15].trim()));
-                        }else{
+                        } else {
                             dbData.setRespPayload(0);
                         }
 
@@ -109,7 +112,7 @@ public class SSDPerformanceTest extends Analysis{
                         dbData.setSlowCount(1);
 
 
-                        return new Tuple2<>(dbKey,dbData);
+                        return new Tuple2<>(dbKey, dbData);
 
                     }
                 }).filter(new Function<Tuple2<DBKey, DBData>, Boolean>() {
@@ -128,32 +131,32 @@ public class SSDPerformanceTest extends Analysis{
                         result.setSlowCount(v1.getSlowCount() + v1.getSlowCount());
                         return result;
                     }
-                }).map(new Function<Tuple2<DBKey,DBData>, Map<String, ?>>() {
+                }).map(new Function<Tuple2<DBKey, DBData>, Map<String, ?>>() {
                     public Map<String, ?> call(Tuple2<DBKey, DBData> v1) throws Exception {
                         DBKey dbKey = v1._1;
                         DBData dbData = v1._2;
                         ImmutableMap.Builder<String, Object> builder = ImmutableMap.builder();
                         builder.put("index_name", sdf.format(format.parse(dbKey.getTimeStart())));
-                        builder.put("probeName",dbKey.getProbeName());
-                        builder.put("customService",dbKey.getCustomService());
-                        builder.put("ipClient",dbKey.getIpClient());
-                        builder.put("ipServer",dbKey.getIpServer());
-                        builder.put("portServer",dbKey.getPortServer());
-                        builder.put("operateType",dbKey.getOperateType());
-                        builder.put("timeStart",format.parse(dbKey.getTimeStart()));
-                        builder.put("dbType",dbKey.getDbType());
-                        builder.put("user",dbKey.getUser());
-                        builder.put("responseCode",dbKey.getResponseCode());
-                        builder.put("sqlString",dbKey.getSqlString());
-                        builder.put("operateTime",dbData.getOperateTime());
-                        builder.put("reqTransTime",dbData.getReqTransTime());
-                        builder.put("respTransTime",dbData.getRespTransTime());
-                        builder.put("respPayload",dbData.getRespPayload());
-                        builder.put("count",dbData.getCount());
-                        builder.put("slowCount",dbData.getSlowCount());
+                        builder.put("probeName", dbKey.getProbeName());
+                        builder.put("customService", dbKey.getCustomService());
+                        builder.put("ipClient", dbKey.getIpClient());
+                        builder.put("ipServer", dbKey.getIpServer());
+                        builder.put("portServer", dbKey.getPortServer());
+                        builder.put("operateType", dbKey.getOperateType());
+                        builder.put("timeStart", format.parse(dbKey.getTimeStart()));
+                        builder.put("dbType", dbKey.getDbType());
+                        builder.put("user", dbKey.getUser());
+                        builder.put("responseCode", dbKey.getResponseCode());
+                        builder.put("sqlString", dbKey.getSqlString());
+                        builder.put("operateTime", dbData.getOperateTime());
+                        builder.put("reqTransTime", dbData.getReqTransTime());
+                        builder.put("respTransTime", dbData.getRespTransTime());
+                        builder.put("respPayload", dbData.getRespPayload());
+                        builder.put("count", dbData.getCount());
+                        builder.put("slowCount", dbData.getSlowCount());
                         return builder.build();
                     }
-                }).persist(StorageLevel.MEMORY_AND_DISK_2() );
+                }).persist(StorageLevel.MEMORY_AND_DISK_2());
 
 
                 if (es != null) {
