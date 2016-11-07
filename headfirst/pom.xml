@@ -24,6 +24,10 @@
             <artifactId>druid</artifactId>
             <version>1.0.18</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.6</version>
+        </dependency>
     </dependencies>
 </project>
