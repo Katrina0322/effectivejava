@@ -14,7 +14,6 @@
         <module>concurrency</module>
         <module>leetcode</module>
         <module>netty</module>
-        <module>protobuf-contract</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -96,4 +95,37 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </repository>
+        <repository>
+            <id>sgemfire</id>
+            <url>http://repo.spring.io/gemstone-release-cache/</url>
+        </repository>
+        <repository>
+            <id>cloudera repository</id>
+            <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-snapshots</id>
+            <url>http://repo.spring.io/snapshot</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <url>http://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

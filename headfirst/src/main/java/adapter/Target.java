@@ -9,7 +9,7 @@ public interface Target {
      */
     void sampleOperation1();
     /**
-     * 这是源类Adapteee没有的方法
+     * 这是源类Adaptee没有的方法
      */
     void sampleOperation2();
 }
