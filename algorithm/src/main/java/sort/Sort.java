@@ -7,8 +7,26 @@ package sort;
 public class Sort {
 
     /**
+     * 选择排序
+     * @param a
+     * @param <T>
+     */
+    public static <T extends Comparable<? super T>> void selectSort(T[] a){
+        int n = a.length;
+        for(int i = 0;i < n;i++){
+            T tmp = a[i];
+            int min = i;
+            for(int j = i+1;j < n;j++){
+                if(a[j].compareTo(a[min]) < 0) min = j;
+            }
+            a[i] = a[min];
+            a[min] = tmp;
+        }
+    }
+
+    /**
      * 插入排序
-     *
+     * @param a
      * @param <T>
      */
     public static <T extends Comparable<? super T>> void insertionSort(T[] a) {
