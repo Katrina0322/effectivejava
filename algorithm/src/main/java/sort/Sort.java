@@ -41,26 +41,8 @@ public class Sort {
     }
 
 
-    private static <T extends Comparable<? super T>> void mergeSort(T[] a, T[] tmp, int left, int right) {
-        if (left < right) {
-            int center = (left + right) / 2;
-            mergeSort(a, tmp, left, center);
-            mergeSort(a, tmp, center + 1, right);
-            merge(a, tmp, left, center + 1, right);
-        }
-    }
-
-
-    private static <T extends Comparable<? super T>> void merge(T[] a, T[] tmp, int leftPos, int rightPos, int rightEnd) {
-        int leftEnd = rightPos - 1;
-        int tmpPos = leftPos;
-        int numElements = rightEnd - leftPos + 1;
-
-    }
-
     /**
      * 希尔排序
-     *
      * @param a
      * @param <T>
      */
@@ -78,6 +60,48 @@ public class Sort {
     }
 
 
+    /**
+     * 归并排序
+     * @param a
+     * @param tmp
+     * @param left
+     * @param right
+     * @param <T>
+     */
+    public static <T extends Comparable<? super T>> void mergeSort(T[] a, T[] tmp, int left, int right) {
+        if (left < right) {
+            int center = (left + right) / 2;
+            mergeSort(a, tmp, left, center);
+            mergeSort(a, tmp, center + 1, right);
+            merge(a, tmp, left, center + 1, right);
+        }
+    }
+
+
+    private static <T extends Comparable<? super T>> void merge(T[] a, T[] tmp, int leftPos, int rightPos, int rightEnd) {
+        int leftEnd = rightPos - 1;
+        int tmpPos = leftPos;
+        int numElements = rightEnd - leftPos + 1;
+
+    }
+
+
+
+
+    /**
+     * 堆排序
+     * @param a
+     * @param <T>
+     */
+    public static <T extends Comparable<? super T>> void heapSort(T[] a) {
+        for (int i = a.length / 2; i >= 0; i--) percDown(a, i, a.length);
+        for (int i = a.length - 1; i > 0; i--) {
+            T tmp = a[0];
+            a[0] = a[i];
+            a[i] = tmp;
+            percDown(a, 0, i);
+        }
+    }
     private static <T extends Comparable<? super T>> void percDown(T[] a, int i, int n) {
         int child;
         T tmp;
@@ -94,15 +118,9 @@ public class Sort {
         a[i] = tmp;
     }
 
-    public static <T extends Comparable<? super T>> void heapSort(T[] a) {
-        for (int i = a.length / 2; i >= 0; i--) percDown(a, i, a.length);
-        for (int i = a.length - 1; i > 0; i--) {
-            T tmp = a[0];
-            a[0] = a[i];
-            a[i] = tmp;
-            percDown(a, 0, i);
-        }
-    }
+
+
+
 
     public static void main(String[] args) {
         Integer[] a = {1, 2, 8, 3, 4};
