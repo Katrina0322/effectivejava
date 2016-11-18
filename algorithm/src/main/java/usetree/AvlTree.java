@@ -6,7 +6,6 @@ package usetree;
  */
 public class AvlTree<T extends Comparable<T>> {
 
-
     private AvlNode<T> root;
 
     public AvlTree() {
@@ -14,19 +13,24 @@ public class AvlTree<T extends Comparable<T>> {
     }
 
     /**
-     * the height of node
-     *
-     * @param t
-     * @return the height of node t,or -1 if null
+     * the height of the tree
+     * @return
      */
-    private int height(AvlNode<T> t) {
-        return t == null ? -1 : t.height;
-    }
-
+    public int height(){ return height(root); }
 
     public boolean isEmpty() {
         return root == null;
     }
+
+    public AvlNode<T> insert(T x){ return insert(x,root); }
+
+    public AvlNode<T> find(T x){ return find(x,root); }
+
+    public AvlNode<T> max(){ return findMax(root); }
+
+    public AvlNode<T> min(){ return findMin(root); }
+
+    public void printTree(){ printTree(root);}
 
 
     /**
@@ -54,7 +58,7 @@ public class AvlTree<T extends Comparable<T>> {
             t.right = insert(x, t.right);
             if (height(t.right) - height(t.left) == 2) {
                 if (x.compareTo(t.right.element) > 0) {
-                    rotateRightChile(t);
+                    rotateRightChild(t);
                 } else {
                     doubleWithRightChild(t);
                 }
@@ -62,6 +66,11 @@ public class AvlTree<T extends Comparable<T>> {
         }
         t.height = Math.max(height(t.left), height(t.right)) + 1;
         return t;
+    }
+
+
+    private int height(AvlNode<T> t) {
+        return t == null ? -1 : t.height;
     }
 
 
@@ -107,15 +116,15 @@ public class AvlTree<T extends Comparable<T>> {
 
     private AvlNode<T> rotateWithLeftChild(AvlNode<T> k2) {
         AvlNode<T> k1 = k2.left;
-        k2.left = k2.right;
+        k2.left = k1.right;
         k1.right = k2;
         k2.height = Math.max(height(k2.left), height(k2.right)) + 1;
         k1.height = Math.max(height(k1.left), k2.height) + 1;
         return k1;
     }
 
-    private AvlNode<T> rotateRightChile(AvlNode<T> k1) {
-        AvlNode<T> k2 = k1.left;
+    private AvlNode<T> rotateRightChild(AvlNode<T> k1) {
+        AvlNode<T> k2 = k1.right;
         k1.right = k2.left;
         k2.left = k1;
         k1.height = Math.max(height(k1.left), height(k1.right)) + 1;
@@ -124,13 +133,13 @@ public class AvlTree<T extends Comparable<T>> {
     }
 
     private AvlNode<T> doubleWithLeftChild(AvlNode<T> k3) {
-        k3.left = rotateRightChile(k3.left);
+        k3.left = rotateRightChild(k3.left);
         return rotateWithLeftChild(k3);
     }
 
     private AvlNode<T> doubleWithRightChild(AvlNode<T> k2) {
         k2.right = rotateWithLeftChild(k2.right);
-        return rotateRightChile(k2);
+        return rotateRightChild(k2);
     }
 
 

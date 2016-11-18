@@ -14,7 +14,7 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 
 
     public BinaryHeap() {
-
+        this.currentSize = DEFAULT_CAPACITY;
     }
 
     public BinaryHeap(int currentSize) {
