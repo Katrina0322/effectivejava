@@ -9,24 +9,27 @@ public class Simple01Bag {
     private static int[][] simple01Bag_1(int[] c, int[] w, int v) {
         if (c.length != w.length) throw new IllegalArgumentException();
         int[][] f = new int[c.length + 1][v + 1];
-        for (int i = 0; i < c.length; i++) {
-            for (int j = 0; j <= v; j++) {
-//                if(j == 0) f[i][j] = 0;
-//                else  if (j < c[i])  f[i][j] = f[i - 1][j];
-//                else  f[i][j] = Math.max(f[i - 1][j], f[i - 1][j - c[i]] + w[i]);
-                if( i == 0 ){
-                    if(j >= c[0])    f[i][j] = w[i];
-                }else{
-                    if (j < c[i])  f[i][j] = f[i - 1][j];
-                    else  f[i][j] = Math.max(f[i - 1][j], f[i - 1][j - c[i]] + w[i]);
-                }
+        for (int col = 0; col <= v; col++) {
+            f[0][col] = 0;
+        }
+
+        for (int col = 0; col <= c.length; col++) {
+            f[col][0] = 0;
+        }
+
+        for (int i = 1; i <= c.length; i++) {
+            for (int j = 1; j <= v; j++) {
+                if (j < c[i - 1])   f[i][j] = f[i - 1][j];
+                else f[i][j] = Math.max(f[i - 1][j], f[i - 1][j - c[i - 1]] + w[i - 1]);
             }
         }
-        int[] flag = new int[c.length];
-        for(int i = 0;i < c.length;i++){
-            if(f[i][v] > f[i+1 ][v]) {
-                flag[i] = 1;
-                v -= c[i];
+
+        //看看选择的是哪些
+        int[] flag = new int[c.length + 1];
+        for(int i = c.length;i> 0;i--){
+            if(f[i][v] > f[i - 1][v]) {
+                flag[i - 1] = 1;
+                v -= c[i - 1];
             }
         }
 
@@ -56,22 +59,13 @@ public class Simple01Bag {
     public static void main(String[] args) {
         int[] c = {2, 2, 6, 5, 4};
         int[] w = {6, 3, 5, 4, 6};
-//        int[] f = simple01Bag(c,w,10);
-//        for(int a:f){
-//            System.out.println(a);
-//        }
 
         int[][] ss = simple01Bag_1(c, w, 10);
-        for (int i = 0; i < c.length; i++) {
+        for (int i = 0; i <= c.length; i++) {
             for (int j = 0; j <= 10; j++) {
                 System.out.print(ss[i][j] + " - ");
             }
             System.out.println();
         }
-
-//        int[] s = simple01Bag_1(c,w,10);
-//        for (int i = 0; i < c.length; i++){
-//            System.out.println(s[i]);
-//        }
     }
 }
