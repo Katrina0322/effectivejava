@@ -35,7 +35,7 @@ public class MultipleBag {
             for (int r = 0; r < w[i]; ++r) {     //对不同的余数   r=j % wi
                 int left = 0, right = 0;  //left和right相当于指针,这里模仿一个定长的双端队列
                 for (int p = 0; p * w[i] + r <= V; ++p) {       //  p=j / wi
-                    while (left < right && f[z][Q[right - 1] * w[i] + r] - Q[right - 1] * v[i] < f[z][p * w[i] + r] - p * v[i]) --right;    //使得每个状态相当于体积为d,互相之间就具有了可比性
+                    while (left < right && f[z][Q[right - 1] * w[i] + r] - Q[right - 1] * v[i] < f[z][p * w[i] + r] - p * v[i]) --right;    //使得每个状态相当于体积为r,互相之间就具有了可比性
                     Q[right++] = p;
                     while (left < right && p - c[i] > Q[left]) ++left;   // q∈[p−ci, p]   q >= p-c[i]
                     int q = Q[left];
