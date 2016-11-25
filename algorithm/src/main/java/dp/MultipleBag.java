@@ -38,7 +38,7 @@ public class MultipleBag {
                     while (left < right && f[z][Q[right - 1] * w[i] + r] - Q[right - 1] * v[i] < f[z][p * w[i] + r] - p * v[i]) --right;    //使得每个状态相当于体积为r,互相之间就具有了可比性
                     Q[right++] = p;
                     while (left < right && p - c[i] > Q[left]) ++left;   // q∈[p−ci, p]   q >= p-c[i]
-                    int q = Q[left];
+                    int q = Q[left];        //q取最小值,相当于k取最大值
                     f[1 - z][p * w[i] + r] = (f[z][q * w[i] + r] - q * v[i]) + p * v[i];
                 }
             }
