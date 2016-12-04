@@ -19,6 +19,6 @@ public class MSD {
     }
 
     private static void sort(String[] a,int lo,int hi,int d){
-        
+
     }
 }
