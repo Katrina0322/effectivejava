@@ -1,5 +1,9 @@
-package com.oneapm.performance;
+package my.util;
 
+/**
+ * used to
+ * Created by tianjin on 12/5/16.
+ */
 public class LogSetting {
     public static void setWarningLogLevel(String name) {
 

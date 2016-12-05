@@ -1,6 +1,7 @@
 package com.oneapm.chap21concurrency.chap21_4;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -11,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Entrance implements Runnable {
     private static Count count = new Count();
-    private static List<Entrance> entrances = new ArrayList<>();
+    private static List<Entrance> entrances = new ArrayList<Entrance>();
     private static volatile boolean canceled = false;
     private final int id;
     private int number = 0;
@@ -41,7 +42,7 @@ public class Entrance implements Runnable {
         return number;
     }
 
-    @Override
+
     public void run() {
         while (!canceled) {
             synchronized (this) {
@@ -56,6 +57,4 @@ public class Entrance implements Runnable {
         }
         System.out.println("Stopping " + this);
     }
-
-
 }
