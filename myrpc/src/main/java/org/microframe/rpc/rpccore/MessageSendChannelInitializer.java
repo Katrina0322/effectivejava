@@ -1,4 +1,4 @@
-package org.microframe.rpc.handler.receive;
+package org.microframe.rpc.rpccore;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -9,20 +9,12 @@ import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
-import java.util.Map;
-
 /**
  * used to
- * Created by tianjin on 12/9/16.
+ * Created by tianjin on 12/8/16.
  */
-public class MessageRecvChannelInitializer extends ChannelInitializer<SocketChannel> {
+public class MessageSendChannelInitializer extends ChannelInitializer<SocketChannel>{
     final public static int MESSAGE_LENGTH = 4;
-    private Map<String, Object> handlerMap;
-
-    public MessageRecvChannelInitializer(Map<String, Object> handlerMap) {
-        this.handlerMap = handlerMap;
-    }
-
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
@@ -31,6 +23,6 @@ public class MessageRecvChannelInitializer extends ChannelInitializer<SocketChan
         pipeline.addLast(new LengthFieldPrepender(MESSAGE_LENGTH));
         pipeline.addLast(new ObjectEncoder());
         pipeline.addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingConcurrentResolver(this.getClass().getClassLoader())));
-        pipeline.addLast(new MessageRecvHandler(handlerMap));
+        pipeline.addLast(new MessageSendHandler());
     }
 }

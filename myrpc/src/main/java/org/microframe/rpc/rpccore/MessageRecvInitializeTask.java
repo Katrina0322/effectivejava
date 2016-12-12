@@ -1,4 +1,4 @@
-package org.microframe.rpc.handler.receive;
+package org.microframe.rpc.rpccore;
 
 import org.microframe.rpc.rpcmodel.MessageResponse;
 import org.microframe.rpc.rpcmodel.MessageRequest;

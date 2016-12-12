@@ -1,8 +1,5 @@
-package org.microframe.rpc.executor;
+package org.microframe.rpc.rpccore;
 
-import org.microframe.rpc.handler.receive.MessageRecvHandler;
-import org.microframe.rpc.rpccore.RpcThreadFactory;
-import org.microframe.rpc.rpccore.RpcThreadPool;
 import org.microframe.rpc.rpcmodel.MessageKeyVal;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -43,7 +40,7 @@ public class MessageRecvExecutor implements ApplicationContextAware,Initializing
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         try {
-            MessageKeyVal keyVal = (MessageKeyVal) applicationContext.getBean(Class.forName("com.oneapm.rpcmodel.MessageKeyVal"));
+            MessageKeyVal keyVal = (MessageKeyVal) applicationContext.getBean(Class.forName("org.microframe.rpc.rpcmodel.MessageKeyVal"));
             Map<String, Object> rpcServiceObject = keyVal.getMessageKeyVal();
             for(Map.Entry<String, Object> entry:rpcServiceObject.entrySet()){
                 handlerMap.put(entry.getKey(),entry.getValue());
