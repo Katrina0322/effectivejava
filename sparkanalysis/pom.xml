@@ -620,7 +620,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.oneapm.producer.KafkaDataProducer</mainClass>
+                            <mainClass>org.microframe.rpc.producer.KafkaDataProducer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
