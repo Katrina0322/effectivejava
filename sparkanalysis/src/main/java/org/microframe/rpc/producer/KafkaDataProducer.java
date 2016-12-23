@@ -27,7 +27,7 @@ public class KafkaDataProducer implements Runnable {
 
     public KafkaDataProducer() {
         Properties props = new Properties();
-        props.put("bootstrap.servers", Config.getConfig("database.cnf").getProperty("bootstrap.server"));
+        props.put("bootstrap.servers", Config.getConfig("netflow.cnf").getProperty("bootstrap.server"));
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         producer = new KafkaProducer<>(props);
@@ -38,7 +38,7 @@ public class KafkaDataProducer implements Runnable {
         this.topic = topic;
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", Config.getConfig("database.cnf").getProperty("bootstrap.server"));
+        props.put("bootstrap.servers", Config.getConfig("netflow.cnf").getProperty("bootstrap.server","localhost:9092"));
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         producer = new KafkaProducer<>(props);
@@ -46,7 +46,7 @@ public class KafkaDataProducer implements Runnable {
 
 
     public static void main(String[] args) throws Exception {
-        KafkaDataProducer kafkaDataProducer1 = new KafkaDataProducer("test", "datafile");
+        KafkaDataProducer kafkaDataProducer1 = new KafkaDataProducer("ni-netflow", "datafile");
         new Thread(kafkaDataProducer1).start();
 
 //        KafkaDataProducer kafkaDataProducer2 = new KafkaDataProducer("tcptest","tcp.file");
@@ -62,7 +62,7 @@ public class KafkaDataProducer implements Runnable {
         BufferedReader br = null;
         try {
             while (true) {
-                br = new BufferedReader(new FileReader(Config.getConfig("database.cnf").getProperty(path)));
+                br = new BufferedReader(new FileReader(Config.getConfig("netflow.cnf").getProperty(path)));
                 String line;
 
 
@@ -71,7 +71,7 @@ public class KafkaDataProducer implements Runnable {
                         producer.send(new ProducerRecord<>(topic, "", line));
                     }
                 }
-                Thread.sleep(Long.valueOf(Config.getConfig("database.cnf").getProperty("sleep.time")));
+                Thread.sleep(Long.valueOf(Config.getConfig("netflow.cnf").getProperty("sleep.time")));
             }
         } catch (Exception e) {
             log.error("The read streaming error: ", e);

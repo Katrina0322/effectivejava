@@ -23,7 +23,7 @@ topic.list=ni-db
 kafaka.zoo=10.128.9.220:2181
 
 datafile=/root/database.txt
-
+bootstrap.server=localhost:9092
 ni.compress.cron=0 30 0 * * ?
 
 
