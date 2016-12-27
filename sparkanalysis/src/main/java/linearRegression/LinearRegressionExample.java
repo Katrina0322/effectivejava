@@ -9,7 +9,8 @@ import org.apache.spark.ml.regression.LinearRegressionTrainingSummary;
 import org.apache.spark.mllib.linalg.Vectors;
 import org.apache.spark.mllib.regression.LabeledPoint;
 import org.apache.spark.mllib.util.MLUtils;
-import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 
 /**
@@ -37,11 +38,11 @@ public class LinearRegressionExample {
         SQLContext sql = new SQLContext(sc);
 
         String path  = resources + "libsvm_data.txt";
-        DataFrame training = sql.createDataFrame(MLUtils.loadLibSVMFile(sc, path).toJavaRDD(), LabeledPoint.class);
+        Dataset<Row> training = sql.createDataFrame(MLUtils.loadLibSVMFile(sc, path).toJavaRDD(), LabeledPoint.class);
 
         LinearRegression lr = new LinearRegression().setMaxIter(10).setRegParam(0.3).setElasticNetParam(0.8);
         LinearRegressionModel lrModel = lr.fit(training);
-        System.out.println("Weights: " + lrModel.weights() + " Intercept: " + lrModel.intercept());
+//        System.out.println("Weights: " + lrModel.weights() + " Intercept: " + lrModel.intercept());
             
         LinearRegressionTrainingSummary trainingSummary = lrModel.summary();
         System.out.println("numIterations: " + trainingSummary.totalIterations());

@@ -7,7 +7,8 @@ import org.apache.spark.ml.classification.BinaryLogisticRegressionSummary;
 import org.apache.spark.ml.classification.LogisticRegression;
 import org.apache.spark.ml.classification.LogisticRegressionModel;
 import org.apache.spark.ml.classification.LogisticRegressionTrainingSummary;
-import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.functions;
 
@@ -33,7 +34,7 @@ public class LogisticWithElasticNet {
         SQLContext sqlContext = new SQLContext(sc);
 
         String path  = resources + "libsvm_data.txt";
-        DataFrame training = sqlContext.read().format("libsvm").load(path);
+        Dataset<Row> training = sqlContext.read().format("libsvm").load(path);
 
         LogisticRegression lr = new LogisticRegression()
                 .setMaxIter(10)
@@ -61,13 +62,13 @@ public class LogisticWithElasticNet {
                 (BinaryLogisticRegressionSummary) trainingSummary;
 
         // Obtain the receiver-operating characteristic as a dataframe and areaUnderROC.
-        DataFrame roc = binarySummary.roc();
+        Dataset<Row> roc = binarySummary.roc();
         roc.show();
         roc.select("FPR").show();
         System.out.println(binarySummary.areaUnderROC());
 
         // Get the threshold corresponding to the maximum F-Measure and rerun LogisticRegression with this selected threshold.
-        DataFrame fMeasure = binarySummary.fMeasureByThreshold();
+        Dataset<Row> fMeasure = binarySummary.fMeasureByThreshold();
         double maxFMeasure = fMeasure.select(functions.max("F-Measure")).head().getDouble(0);
         double bestThreshold = fMeasure.where(fMeasure.col("F-Measure").equalTo(maxFMeasure))
                 .select("threshold").head().getDouble(0);
