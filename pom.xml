@@ -18,6 +18,7 @@
         <module>commons</module>
         <module>understandJVM</module>
         <module>deeplearning4j</module>
+        <module>flinkanalysis</module>
     </modules>
     <packaging>pom</packaging>
 
