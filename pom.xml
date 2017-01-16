@@ -17,6 +17,7 @@
         <module>myrpc</module>
         <module>commons</module>
         <module>understandJVM</module>
+        <module>deeplearning4j</module>
     </modules>
     <packaging>pom</packaging>
 
