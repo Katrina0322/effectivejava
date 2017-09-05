@@ -13,4 +13,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConcurrentHashMapTest {
     private ConcurrentHashMap<String, String> test = new ConcurrentHashMap<>();
     private Map<String, String> map = new HashMap<>();
+
+    public static void main(String[] args) {
+
+    }
+
 }
