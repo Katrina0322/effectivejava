@@ -13,34 +13,35 @@ import java.util.concurrent.locks.Lock;
  * Date: 9/6/17 5:13 PM
  */
 public class Mutex implements Lock, Serializable {
+    private final Sync sync = new Sync();
     @Override
     public void lock() {
-
+        sync.acquire(1);
     }
 
     @Override
     public void lockInterruptibly() throws InterruptedException {
-
+        sync.acquireInterruptibly(1);
     }
 
     @Override
     public boolean tryLock() {
-        return false;
+        return sync.tryAcquire(1);
     }
 
     @Override
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
-        return false;
+        return sync.tryAcquireNanos(1, unit.toNanos(time));
     }
 
     @Override
     public void unlock() {
-
+        sync.release(1);
     }
 
     @Override
     public Condition newCondition() {
-        return null;
+        return sync.newCondition();
     }
 
 
@@ -48,17 +49,10 @@ public class Mutex implements Lock, Serializable {
         @Override
         protected boolean tryRelease(int arg) {
             assert arg == 1;
-            return super.tryRelease(arg);
-        }
-
-        @Override
-        protected int tryAcquireShared(int arg) {
-            return super.tryAcquireShared(arg);
-        }
-
-        @Override
-        protected boolean tryReleaseShared(int arg) {
-            return super.tryReleaseShared(arg);
+            if(getState() == 0) throw new IllegalMonitorStateException();
+            setExclusiveOwnerThread(null);
+            setState(0);
+            return true;
         }
 
         @Override
@@ -74,6 +68,10 @@ public class Mutex implements Lock, Serializable {
                 return true;
             }
             return false;
+        }
+
+        private Condition newCondition(){
+            return new ConditionObject();
         }
     }
 }
