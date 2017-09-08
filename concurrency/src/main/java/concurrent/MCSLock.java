@@ -3,25 +3,18 @@ package concurrent;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * filename: CLHLock
+ * filename: MCSLock
  * Description:
  * Author: ubuntu
- * Date: 9/5/17 4:46 PM
+ * Date: 9/8/17 11:05 AM
  */
-public class CLHLock{
-
-    private final ThreadLocal<Node> prev;
+public class MCSLock {
+    private AtomicReference<Node> tail;
     private final ThreadLocal<Node> node;
-    private final AtomicReference<Node> tail = new AtomicReference<>(new Node());
 
-    public CLHLock() {
-        this.prev = new ThreadLocal<Node>(){
-            @Override
-            protected Node initialValue() {
-                return null;
-            }
-        };
-        this.node = new ThreadLocal<Node>(){
+    public MCSLock() {
+        tail = new AtomicReference<>(null);
+        node = new ThreadLocal<Node>(){
             @Override
             protected Node initialValue() {
                 return new Node();
@@ -30,27 +23,40 @@ public class CLHLock{
     }
 
     public void lock(){
-        final Node qnode = this.node.get();
+        Node qnode = node.get();
         qnode.locked = true;
-        Node prev = this.tail.getAndSet(qnode);
-        this.prev.set(prev);
-        while (prev.locked){
+        Node prev = tail.getAndSet(qnode);
+        if(prev != null){
+            prev.next = qnode;
+            while (qnode.locked){
 
+            }
         }
     }
 
     public void unlock(){
-        final Node qnode = this.node.get();
-        qnode.locked = false;
-        this.node.set(this.prev.get());
+        Node qnode = node.get();
+        System.out.println(Thread.currentThread().getId() + "" + qnode.locked);
+        if(qnode.next == null){
+            if(tail.compareAndSet(qnode, null)){
+                return;
+            }
+            while (qnode.next == null){
+
+            }
+        }
+        qnode.next.locked = false;
+        qnode.next = null;
     }
 
+
     private static class Node {
-        private volatile boolean locked;
+        private volatile boolean locked = false;
+        private Node next = null;
     }
 
     public static void main(String[] args) throws InterruptedException {
-        final CLHLock lock = new CLHLock();
+        final MCSLock lock = new MCSLock();
         lock.lock();
 
         for (int i = 0; i < 10; i++) {
