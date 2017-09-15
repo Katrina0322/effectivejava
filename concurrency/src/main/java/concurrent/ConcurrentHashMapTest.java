@@ -3,6 +3,7 @@ package concurrent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * filename: ConcurrentHashMapTest
@@ -13,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConcurrentHashMapTest {
     private ConcurrentHashMap<String, String> test = new ConcurrentHashMap<>();
     private Map<String, String> map = new HashMap<>();
+    ReentrantLock lock = new ReentrantLock();
 
     public static void main(String[] args) {
 
