@@ -3,6 +3,8 @@ package concurrent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -15,6 +17,8 @@ public class ConcurrentHashMapTest {
     private ConcurrentHashMap<String, String> test = new ConcurrentHashMap<>();
     private Map<String, String> map = new HashMap<>();
     ReentrantLock lock = new ReentrantLock();
+    CountDownLatch latch = new CountDownLatch(2);
+    Semaphore semaphere = new Semaphore(5);
 
     public static void main(String[] args) {
 
