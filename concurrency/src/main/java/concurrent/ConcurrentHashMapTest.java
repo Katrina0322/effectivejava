@@ -2,9 +2,7 @@ package concurrent;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -21,7 +19,25 @@ public class ConcurrentHashMapTest {
     Semaphore semaphere = new Semaphore(5);
 
     public static void main(String[] args) {
-
+        Callable<Integer> integerCallable = new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return 5;
+            }
+        };
+        ExecutorService service = Executors.newCachedThreadPool();
+        Future<Integer> a = service.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return 5;
+            }
+        });
+        try {
+            System.out.println(a.get());
+            service.shutdown();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
 }
