@@ -20,6 +20,7 @@ public class ConcurrentHashMapTest {
     ReentrantLock lock = new ReentrantLock();
     CountDownLatch latch = new CountDownLatch(2);
     Semaphore semaphere = new Semaphore(5);
+    RateLimiter limiter = RateLimiter.create(1000);
 
     final static ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1));
 
