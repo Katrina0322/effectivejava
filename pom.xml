@@ -19,6 +19,7 @@
         <module>understandJVM</module>
         <module>deeplearning4j</module>
         <module>flinkanalysis</module>
+        <module>test</module>
     </modules>
     <packaging>pom</packaging>
 
