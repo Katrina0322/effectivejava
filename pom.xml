@@ -20,6 +20,7 @@
         <module>deeplearning4j</module>
         <module>flinkanalysis</module>
         <module>test</module>
+        <module>spring-test</module>
     </modules>
     <packaging>pom</packaging>
 
