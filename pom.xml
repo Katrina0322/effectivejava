@@ -17,10 +17,9 @@
         <module>myrpc</module>
         <module>commons</module>
         <module>understandJVM</module>
-        <module>deeplearning4j</module>
         <module>flinkanalysis</module>
         <module>test</module>
-        <module>spring-test</module>
+        <module>springtest</module>
     </modules>
     <packaging>pom</packaging>
 
