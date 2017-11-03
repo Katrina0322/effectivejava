@@ -22,6 +22,18 @@
             <artifactId>kafka-clients</artifactId>
             <version>0.9.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka_2.10 -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.9.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
@@ -52,6 +64,7 @@
             <id>cloudera repository</id>
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
+
     </repositories>
 
     <pluginRepositories>
