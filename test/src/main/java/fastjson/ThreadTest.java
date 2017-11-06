@@ -11,13 +11,11 @@ package fastjson;
 public class ThreadTest {
     public static void get(User user){
         synchronized(user) {
-            UserAdd userAdd = new UserAdd();
             int a = user.getMoney();
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+            UserAdd userAdd = new UserAdd();
+
+
             int b = user.getMoney();
 //        System.out.println(a + "--------" + b);
 

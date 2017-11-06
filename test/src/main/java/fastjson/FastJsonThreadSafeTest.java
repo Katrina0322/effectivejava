@@ -1,6 +1,5 @@
 package fastjson;
 
-
 /**
  * filename: FastJsonThreadSafeTest
  * Description:
@@ -11,6 +10,7 @@ public class FastJsonThreadSafeTest {
     private static User json = new User(5, "aa");
 
     public static void test(){
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -27,15 +27,15 @@ public class FastJsonThreadSafeTest {
             }
         }).start();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public static void main(String[] args) {
-        for( int i = 0; i< 100; i++) {
+        for( int i = 0; i< 10000; i++) {
             test();
         }
     }
