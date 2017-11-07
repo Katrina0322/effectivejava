@@ -77,7 +77,7 @@ public class TopicTest {
     }
 
     public static void main(String[] args) {
-//        deleteTopic("10.128.5.14:2181", "test");
+//        deleteTopic("10.128.5.14:2181", "tttest1");
 //        createTopic("10.128.5.14:2181", "tttest1", 1, 2);
         sendMessage("tttest1", "测试zookeeper topic节点");
 
