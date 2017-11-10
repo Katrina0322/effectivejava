@@ -46,6 +46,10 @@ public class TopicTest {
         zkUtils.close();
     }
 
+    public static int toPositive(int number) {
+        return number & 2147483647;
+    }
+
     public static void sendMessage(final String topicName, final String message){
 //        final CountDownLatch start = new CountDownLatch(1);
         Properties props = new Properties();
@@ -79,7 +83,8 @@ public class TopicTest {
     public static void main(String[] args) {
 //        deleteTopic("10.128.5.14:2181", "tttest1");
 //        createTopic("10.128.5.14:2181", "tttest1", 1, 2);
-        sendMessage("tttest1", "测试zookeeper topic节点");
-
+//        sendMessage("tttest1", "测试zookeeper topic节点");
+        System.out.println(Integer.toBinaryString(-1));
+        System.out.println(Integer.toBinaryString(Integer.MAX_VALUE).length());
     }
 }

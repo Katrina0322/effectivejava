@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>springtest</artifactId>
+    <artifactId>cluster_install</artifactId>
     <version>0.1</version>
     <dependencyManagement>
         <dependencies>
