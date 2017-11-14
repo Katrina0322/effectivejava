@@ -16,6 +16,7 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -65,7 +66,7 @@ public class TopicTest {
         final Producer<String, String> producer = new KafkaProducer<>(props);
         long startTime = System.nanoTime();
 
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 10000; i++) {
                         producer.send(new ProducerRecord<>(topicName, Integer.toString(i), Integer.toString(i) + message), new Callback() {
                             @Override
                             public void onCompletion(RecordMetadata recordMetadata, Exception e) {
@@ -73,18 +74,34 @@ public class TopicTest {
                                 System.out.println("The offset of the record we just sent is: " + recordMetadata.offset());
                             }
                         });
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
         System.out.println("发送结束");
         System.out.println("花费时间" + (System.nanoTime() - startTime));
-        producer.close();
+//        producer.close();
 //        executor.shutdown();
     }
 
     public static void main(String[] args) {
+        ExecutorService service = Executors.newFixedThreadPool(10000);
 //        deleteTopic("10.128.5.14:2181", "tttest1");
 //        createTopic("10.128.5.14:2181", "tttest1", 1, 2);
+        for(int i = 0; i < 10000; i++){
+            service.submit(new Runnable() {
+                @Override
+                public void run() {
+//                    for (int i = 0; i < 100; i++) {
+                    sendMessage("tttest1", "测试zookeeper topic节点" + Thread.currentThread());
+//                    }
+                }
+            });
+        }
 //        sendMessage("tttest1", "测试zookeeper topic节点");
-        System.out.println(Integer.toBinaryString(-1));
-        System.out.println(Integer.toBinaryString(Integer.MAX_VALUE).length());
+//        System.out.println(Integer.toBinaryString(-1));
+//        System.out.println(Integer.toBinaryString(Integer.MAX_VALUE).length());
     }
 }

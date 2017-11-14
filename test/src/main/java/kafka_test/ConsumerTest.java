@@ -5,6 +5,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * filename: ConsumerTest
@@ -59,6 +61,17 @@ public class ConsumerTest {
     }
 
     public static void main(String[] args) {
-        consumer("tttest1", "10.128.5.14:9092,10.128.5.11:9092,10.128.5.13:9092", "topictest");
+        ExecutorService service = Executors.newFixedThreadPool(10);
+        for(int j = 0; j < 10000; j++) {
+            service.submit(new Runnable() {
+                @Override
+                public void run() {
+//                    for (int i = 0; i < 100; i++) {
+                        consumer("tttest1", "10.128.5.14:9092,10.128.5.11:9092,10.128.5.13:9092", "topictest" + Thread.currentThread());
+//                    }
+                }
+            });
+        }
+
     }
 }
