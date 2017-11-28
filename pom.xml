@@ -20,6 +20,7 @@
         <module>flinkanalysis</module>
         <module>test</module>
         <module>cluster_install</module>
+        <module>mymvc</module>
     </modules>
     <packaging>pom</packaging>
 
