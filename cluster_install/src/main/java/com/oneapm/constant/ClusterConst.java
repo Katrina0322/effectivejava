@@ -1,4 +1,4 @@
-package com.oneapm.Constant;
+package com.oneapm.constant;
 
 import com.sun.management.OperatingSystemMXBean;
 

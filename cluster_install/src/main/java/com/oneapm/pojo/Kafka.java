@@ -1,4 +1,4 @@
-package com.oneapm.dao;
+package com.oneapm.pojo;
 
 import java.util.List;
 
