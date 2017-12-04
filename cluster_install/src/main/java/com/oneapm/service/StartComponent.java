@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StartComponent {
-    private boolean runCommand(String shell){
+    private boolean runCommand(String[] commands){
         ProcessBuilder processBuilder = new ProcessBuilder();
         return false;
     }
