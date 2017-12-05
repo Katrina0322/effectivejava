@@ -27,6 +27,7 @@ public class Bootstrap {
 
         ApmStarter starter = new ApmStarter(agentArgsMap, bootstrapJarFile, classPathResolver, instrumentation);
 
+
     }
 
     private static void appendToBootstrapClassLoader(Instrumentation instrumentation, BootstrapJarFile agentJarFile) {
