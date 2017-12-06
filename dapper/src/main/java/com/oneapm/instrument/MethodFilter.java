@@ -7,5 +7,8 @@ package com.oneapm.instrument;
  * Date: 12/5/17 2:48 PM
  */
 public interface MethodFilter {
+    boolean ACCEPT = true;
+    boolean REJECT = false;
 
+    boolean accept(InstrumentMethod method);
 }

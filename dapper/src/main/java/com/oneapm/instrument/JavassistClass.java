@@ -2,9 +2,11 @@ package com.oneapm.instrument;
 
 import javassist.CtClass;
 import javassist.CtConstructor;
+import javassist.CtMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,11 +68,20 @@ public class JavassistClass implements InstrumentClass {
 
     @Override
     public List<InstrumentMethod> getDeclaredMethods() {
-        return null;
+        return getDeclaredMethods(MethodFilters.ACCEPT_ALL);
     }
 
     @Override
     public List<InstrumentMethod> getDeclaredMethods(MethodFilter filter) {
+        if (filter == null) {
+            throw new NullPointerException("methodFilter must not be null");
+        }
+        CtMethod[] declaredMethod = ctClass.getDeclaredMethods();
+        List<InstrumentMethod> candidateList = new ArrayList<>(declaredMethod.length);
+        for(CtMethod ctMethod:declaredMethod){
+            InstrumentMethod method = new JavassistMethod(ctMethod, this);
+        }
+
         return null;
     }
 

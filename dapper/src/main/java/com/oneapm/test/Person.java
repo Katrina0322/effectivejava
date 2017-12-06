@@ -1,6 +1,7 @@
 package com.oneapm.test;
 
-import java.util.List;
+
+import java.util.Arrays;
 
 /**
  * filename: Person
@@ -12,18 +13,19 @@ public class Person {
     private int age;
     private String name;
     private String[] address;
-    private List<House> houses;
+
+    public Person() {
+    }
 
     public Person(int age, String name) {
         this.age = age;
         this.name = name;
     }
 
-    public Person(int age, String name, String[] address, List<House> houses) {
+    public Person(int age, String name, String[] address) {
         this.age = age;
         this.name = name;
         this.address = address;
-        this.houses = houses;
     }
 
     public int getAge() {
@@ -38,7 +40,12 @@ public class Person {
         return address;
     }
 
-    public List<House> getHouses() {
-        return houses;
+    @Override
+    public String toString() {
+        return "Person{" +
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", address=" + Arrays.toString(address) +
+                '}';
     }
 }

@@ -14,6 +14,7 @@ public class House {
     public House() {
     }
 
+
     public House(String address, int big, double price) {
         this.address = address;
         this.big = big;

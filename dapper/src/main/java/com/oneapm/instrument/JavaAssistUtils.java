@@ -1,7 +1,15 @@
 package com.oneapm.instrument;
 
 
+import javassist.CtBehavior;
+import javassist.bytecode.AttributeInfo;
+import javassist.bytecode.CodeAttribute;
+import javassist.bytecode.LocalVariableAttribute;
+import javassist.bytecode.MethodInfo;
+
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,6 +21,7 @@ import java.util.Map;
 public class JavaAssistUtils {
 
     private static final Map<String, String> PRIMITIVE_JAVA_TO_JVM = createPrimitiveJavaToJvmMap();
+    private static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     private static Map<String,String> createPrimitiveJavaToJvmMap() {
         final Map<String, String> primitiveJavaToJvm = new HashMap<String, String>();
@@ -28,6 +37,11 @@ public class JavaAssistUtils {
         return primitiveJavaToJvm;
     }
 
+    /**
+     * java类型转化为
+     * @param javaTypeArray
+     * @return
+     */
     public static String javaTypeToJvmSignature(String[] javaTypeArray){
         if (javaTypeArray == null || javaTypeArray.length == 0) {
             return "()";
@@ -120,5 +134,58 @@ public class JavaAssistUtils {
             }
         }
         return arraySize;
+    }
+
+    public static String[] getParameterVariableName(CtBehavior behavior) {
+        if(behavior == null) throw new NullPointerException("method must not be null");
+        LocalVariableAttribute localVariableAttribute = lookupLocalVariableAttribute(behavior);
+        if (localVariableAttribute == null) {
+            return getParameterDefaultVariableName(behavior);
+        }
+        return getParameterVariableName(behavior, localVariableAttribute);
+    }
+
+    private static String[] getParameterVariableName(CtBehavior behavior, LocalVariableAttribute localVariableAttribute) {
+        return null;
+    }
+
+    private static String[] getParameterDefaultVariableName(CtBehavior ctBehavior){
+        if (ctBehavior == null) {
+            throw new NullPointerException("method must not be null");
+        }
+        return null;
+    }
+
+    public static LocalVariableAttribute lookupLocalVariableAttribute(CtBehavior behavior) {
+        if(behavior == null) throw new NullPointerException("method must not be null");
+        MethodInfo methodInfo = behavior.getMethodInfo2();
+        CodeAttribute codeAttribute = methodInfo.getCodeAttribute();
+        if(codeAttribute == null) return null;
+        AttributeInfo localVariableTable = codeAttribute.getAttribute(LocalVariableAttribute.tag);
+        return (LocalVariableAttribute) localVariableTable;
+    }
+
+    public static String[] parseParameterSignature(String signature){
+        if (signature == null) {
+            throw new NullPointerException("signature must not be null");
+        }
+        List<String> parameterSignatureList = splitParameterSignature(signature);
+        if (parameterSignatureList.isEmpty()) {
+            return EMPTY_STRING_ARRAY;
+        }
+        return null;
+    }
+
+    private static List<String> splitParameterSignature(String signature) {
+        String parameterSignature = getParameterSignature(signature);
+        if (signature.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return null;
+    }
+
+    private static String getParameterSignature(String signature) {
+
+        return null;
     }
 }
