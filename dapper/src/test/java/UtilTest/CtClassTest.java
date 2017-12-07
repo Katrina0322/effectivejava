@@ -53,15 +53,15 @@ public class CtClassTest {
             setName.setModifiers(Modifier.PUBLIC);
             ctClass.addMethod(getName);
             ctClass.addMethod(setName);
-
             ctClass.setAttribute("house", "ccc".getBytes());
 
         } catch (CannotCompileException e) {
             e.printStackTrace();
         }
         try {
-            Person ctPerson = (Person) ctClass.toClass().newInstance();
-            System.out.println(ctPerson.toString());
+            Object object = ctClass.toClass().newInstance();
+
+            System.out.println();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
