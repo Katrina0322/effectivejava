@@ -1,4 +1,4 @@
-package com.oneapm.SPI;
+package SPI;
 
 /**
  * @filename: HelloService
