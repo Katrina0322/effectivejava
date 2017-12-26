@@ -16,7 +16,9 @@ import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.datastream.WindowedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.functions.AssignerWithPeriodicWatermarks;
 import org.apache.flink.streaming.api.functions.timestamps.AscendingTimestampExtractor;
+import org.apache.flink.streaming.api.watermark.Watermark;
 import org.apache.flink.streaming.api.windowing.assigners.WindowAssigner;
 import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.api.windowing.triggers.Trigger;
@@ -24,6 +26,7 @@ import org.apache.flink.streaming.api.windowing.windows.TimeWindow;
 import org.apache.flink.streaming.api.windowing.windows.Window;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer09;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Properties;
 
@@ -44,12 +47,18 @@ public class FlinkWithKafkaComsumer {
         FlinkKafkaConsumer09<String> kafkaConsumer09 = new FlinkKafkaConsumer09<>("apm-web-trans-agg-1", new SimpleStringSchema(), properties);
         kafkaConsumer09.setStartFromEarliest();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-        kafkaConsumer09.assignTimestampsAndWatermarks(new AscendingTimestampExtractor<String>() {
-            @Override
-            public long extractAscendingTimestamp(String s) {
-                return 0;
-            }
-        });
+//        kafkaConsumer09.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks<String>() {
+//            @Nullable
+//            @Override
+//            public Watermark getCurrentWatermark() {
+//                return null;
+//            }
+//
+//            @Override
+//            public long extractTimestamp(String s, long l) {
+//                return 0;
+//            }
+//        });
         DataStream<String> stream = env.addSource(kafkaConsumer09);
 //       stream.addSink(new SinkFunction<String>() {
 //           @Override
@@ -79,6 +88,8 @@ public class FlinkWithKafkaComsumer {
         windows.reduce(new ReduceFunction<ApmTrans>() {
             @Override
             public ApmTrans reduce(ApmTrans apmTrans, ApmTrans t1) throws Exception {
+                ApmTrans apmTrans1 = new ApmTrans();
+
                 return null;
             }
         });
