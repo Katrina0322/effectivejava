@@ -23,6 +23,7 @@
         <module>mymvc</module>
         <module>dapper</module>
         <module>tomcat</module>
+        <module>database</module>
     </modules>
     <packaging>pom</packaging>
 
