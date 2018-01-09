@@ -22,6 +22,7 @@ public class DefaultMemStore extends AbstractMemStore {
     }
 
     private boolean shouldFlushInMemory() {
+
         return inMemoryFlushInProgress.compareAndSet(false, true);
     }
 
