@@ -7,4 +7,5 @@ package com.effective.hermes.cache;
  * Date: 1/11/18 2:15 PM
  */
 public class ColumnFamily {
+
 }

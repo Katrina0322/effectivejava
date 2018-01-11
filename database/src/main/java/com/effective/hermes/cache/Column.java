@@ -7,4 +7,8 @@ package com.effective.hermes.cache;
  * Date: 1/11/18 2:23 PM
  */
 public class Column {
+    private byte[] name;
+    private byte[] value;
+    private long timestamp;
+
 }
