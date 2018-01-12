@@ -8,6 +8,7 @@ package com.effective.hermes.cache;
  */
 public class Column {
     private byte[] name;
+
     private byte[] value;
     private long timestamp;
 
