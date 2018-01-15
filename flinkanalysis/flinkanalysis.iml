@@ -11,6 +11,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-streaming-java_2.11:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-core:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.flink:flink-annotations:1.4.0" level="project" />
