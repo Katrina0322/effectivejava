@@ -59,7 +59,7 @@ public class FlinkWithKafkaComsumer {
 //                return 0;
 //            }
 //        });
-        DataStream<String> stream = env.addSource(kafkaConsumer09);
+            DataStream<String> stream = env.addSource(kafkaConsumer09);
 //       stream.addSink(new SinkFunction<String>() {
 //           @Override
 //           public void invoke(String value, Context context) throws Exception {
@@ -94,7 +94,7 @@ public class FlinkWithKafkaComsumer {
             }
         });
 
-//        key.window(new WindowAssigner<ApmTrans, Window>() {
+//        key.window(new WindowA        ssigner<ApmTrans, Window>() {
 //            private static final long serialVersionUID = -8854510666154522903L;
 //
 //            @Override
