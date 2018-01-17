@@ -47,25 +47,7 @@ public class FlinkWithKafkaComsumer {
         FlinkKafkaConsumer09<String> kafkaConsumer09 = new FlinkKafkaConsumer09<>("apm-web-trans-agg-1", new SimpleStringSchema(), properties);
         kafkaConsumer09.setStartFromEarliest();
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
-//        kafkaConsumer09.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks<String>() {
-//            @Nullable
-//            @Override
-//            public Watermark getCurrentWatermark() {
-//                return null;
-//            }
-//
-//            @Override
-//            public long extractTimestamp(String s, long l) {
-//                return 0;
-//            }
-//        });
-            DataStream<String> stream = env.addSource(kafkaConsumer09);
-//       stream.addSink(new SinkFunction<String>() {
-//           @Override
-//           public void invoke(String value, Context context) throws Exception {
-//               System.out.println(value);
-//           }
-//       });
+        DataStream<String> stream = env.addSource(kafkaConsumer09);
         DataStream<ApmTrans> apm = stream.map(new MapFunction<String, ApmTrans>() {
             private static final long serialVersionUID = 5410801009568806675L;
 
