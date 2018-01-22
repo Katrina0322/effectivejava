@@ -6,10 +6,30 @@ package com.effective.hermes.cache;
  * Author: ubuntu
  * Date: 1/11/18 2:23 PM
  */
-public class Column {
-    private byte[] name;
+public interface Column extends HeapSize{
+     byte[] getColumName();
+     byte[] getColumValue();
+     long getTimestamp();
 
-    private byte[] value;
-    private long timestamp;
+    Type getType();
 
+    enum Type {
+        Put((byte) 4),
+
+        Delete((byte) 8),
+
+        DeleteFamilyVersion((byte) 10),
+
+        DeleteColumn((byte) 12);
+
+        private final byte code;
+
+        Type(final byte c) {
+            this.code = c;
+        }
+
+        public byte getCode() {
+            return this.code;
+        }
+    }
 }

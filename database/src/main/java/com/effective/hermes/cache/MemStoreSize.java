@@ -6,46 +6,38 @@ package com.effective.hermes.cache;
  * Author: ubuntu
  * Date: 1/5/18 6:12 PM
  */
-public class MemStoreSize {
-    protected long dataSize;
-    protected long heapSize;
+@Deprecated
+public class MemStoreSize implements HeapSize{
+    private volatile long heapSize;
+
     public MemStoreSize() {
-        this(0L, 0L);
+        this(0L);
     }
-    public MemStoreSize(long dataSize, long heapSize) {
-        this.dataSize = dataSize;
+    public MemStoreSize(long heapSize) {
         this.heapSize = heapSize;
     }
     public boolean isEmpty() {
-        return this.dataSize == 0 && this.heapSize == 0;
+        return this.heapSize == 0;
     }
 
-    public long getDataSize() {
-        return this.dataSize;
+    public void incMemStoreSize(long heapSizeDelta) {
+        this.heapSize += heapSizeDelta;
     }
 
-    public long getHeapSize() {
+    public void incMemStoreSize(MemStoreSize delta) {
+        incMemStoreSize( delta.heapSize());
+    }
+
+    public void decMemStoreSize(long heapSizeDelta) {
+        this.heapSize -= heapSizeDelta;
+    }
+
+    public void decMemStoreSize(MemStoreSize delta) {
+        decMemStoreSize(delta.heapSize());
+    }
+
+    @Override
+    public long heapSize() {
         return this.heapSize;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        MemStoreSize other = (MemStoreSize) obj;
-        return this.dataSize == other.dataSize && this.heapSize == other.heapSize;
-    }
-
-    @Override
-    public int hashCode() {
-        long h = 13 * this.dataSize;
-        h = h + 14 * this.heapSize;
-        return (int) h;
-    }
-
-    @Override
-    public String toString() {
-        return "dataSize=" + this.dataSize + " , heapSize=" + this.heapSize;
     }
 }
