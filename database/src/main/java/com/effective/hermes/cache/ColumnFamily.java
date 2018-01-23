@@ -16,8 +16,8 @@ public class ColumnFamily implements HeapSize{
 
 
     public void add(String key, Column column){
-        family.put(key, column);
-        heapSize += column.heapSize();
+        Column old = family.put(key, column);
+        if(old == null) heapSize += column.heapSize();
     }
 
     public Column get(String key){
@@ -27,6 +27,6 @@ public class ColumnFamily implements HeapSize{
 
     @Override
     public long heapSize() {
-        return 0;
+        return heapSize;
     }
 }

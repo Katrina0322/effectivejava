@@ -1,7 +1,7 @@
 package com.effective.hermes.cache;
 
-import java.util.NavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+
+import java.util.List;
 
 /**
  * filename: Table
@@ -11,5 +11,9 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class Table {
     private String tableName;
-    private NavigableMap<String, ColumnFamily> family = new ConcurrentSkipListMap<>();
+    private List<StoreFile> storeFiles;
+    private TableDescript descript;
+    private Memtable memtables;
+
+
 }

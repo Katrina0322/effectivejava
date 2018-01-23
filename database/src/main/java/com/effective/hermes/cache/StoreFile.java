@@ -7,5 +7,7 @@ package com.effective.hermes.cache;
  * Author: ubuntu
  * Date: 1/10/18 10:31 AM
  */
-public class StoreFile {
+public interface StoreFile {
+    String getLocation();
+    IndexBlock getIndexBlock();
 }
