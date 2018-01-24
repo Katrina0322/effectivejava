@@ -14,16 +14,15 @@ import java.nio.channels.FileLock;
 public class RandomAccessFileTest {
 
     public static void main(String[] args) {
+        write();
+        read();
+    }
 
-//            long length = 100000;
-//            long position = 10000;
-//            RandomAccessFile randomAccessFile = new RandomAccessFile("", "r");
-//            FileChannel fileChannel = randomAccessFile.getChannel();
-//            MappedByteBuffer mappedByteBuffer = fileChannel.map(FileChannel.MapMode.READ_WRITE, position, length);
-//            FileLock fileLock = fileChannel.tryLock(position, length, false);
+    public static void write(){
+        File file = new File("aa.txt");
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream("aa.txt", true);
+            fileOutputStream = new FileOutputStream(file, true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -31,6 +30,9 @@ public class RandomAccessFileTest {
         FileChannel channel = fileOutputStream.getChannel();
         ByteBuffer buffer = ByteBuffer.allocate(100);
         buffer.putInt(100);
+        buffer.putChar('A');
+        buffer.putChar('C');
+
         try {
             buffer.flip();
             channel.write(buffer);
@@ -46,5 +48,53 @@ public class RandomAccessFileTest {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void read(){
+        File file = new File("aa.txt");
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+//        file.deleteOnExit();
+        assert inputStream != null;
+        FileChannel channel = inputStream.getChannel();
+        MappedByteBuffer mappedByteBuffer = null;
+        try {
+//            System.out.println(file.length());
+            mappedByteBuffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length());
+            System.out.println(mappedByteBuffer.position());
+            System.out.println(mappedByteBuffer.capacity());
+            System.out.println(mappedByteBuffer.remaining());
+            System.out.println(mappedByteBuffer.limit());
+            System.out.println();
+//            mappedByteBuffer.flip();
+//            System.out.println(mappedByteBuffer.position());
+//            System.out.println(mappedByteBuffer.capacity());
+//            System.out.println(mappedByteBuffer.remaining());
+//            System.out.println(mappedByteBuffer.limit());
+
+
+            byte[] buffer = new byte[mappedByteBuffer.capacity()];
+            mappedByteBuffer.get(buffer, 0 , mappedByteBuffer.capacity());
+            mappedByteBuffer.clear();
+            String s = new String(buffer);
+            System.out.println(s);
+//
+            channel.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+//        if (file.delete())
+//            System.out.println("Temporary file deleted: " + file);
+//        else
+//            System.err.println("Not yet deleted: " + file);
+
+
     }
 }

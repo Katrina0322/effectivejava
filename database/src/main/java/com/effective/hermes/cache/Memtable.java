@@ -1,5 +1,7 @@
 package com.effective.hermes.cache;
 
+import com.effective.hermes.io.StoreFileWriter;
+
 import java.util.NavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 

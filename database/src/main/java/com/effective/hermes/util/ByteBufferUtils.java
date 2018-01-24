@@ -2,7 +2,11 @@ package com.effective.hermes.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 /**
  * filename: ByteBufferUtils
@@ -44,5 +48,24 @@ public final class ByteBufferUtils {
 
     public static void putInt(OutputStream out, final int value) throws IOException {
         StreamUtils.writeInt(out, value);
+    }
+
+    public static void release(ByteBuffer byteBuffer){
+        AccessController.doPrivileged(new PrivilegedAction<Object>() {
+            @Override
+            public Object run() {
+
+                Method getCleanerMethod = null;
+                try {
+                    getCleanerMethod = byteBuffer.getClass().getMethod("cleaner");
+
+                sun.misc.Cleaner cleaner =(sun.misc.Cleaner)getCleanerMethod.invoke(byteBuffer);
+                    cleaner.clean();
+                } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
     }
 }

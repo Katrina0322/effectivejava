@@ -1,4 +1,6 @@
-package com.effective.hermes.cache;
+package com.effective.hermes.io;
+
+import com.effective.hermes.cache.StoreFile;
 
 /**
  * filename: StoreFileWriter

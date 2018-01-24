@@ -15,6 +15,10 @@ public class DefaultStoreFile implements StoreFile {
         this.indexBlock = indexBlock;
     }
 
+    public DefaultStoreFile(String location) {
+        this.location = location;
+    }
+
     @Override
     public String getLocation() {
         return null;
