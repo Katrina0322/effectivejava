@@ -1,9 +1,9 @@
 package com.effective.hermes.factory;
 
-import com.effective.hermes.Constant.Constant;
-import com.effective.hermes.cache.DefaultStoreFile;
-import com.effective.hermes.cache.IndexBlock;
-import com.effective.hermes.cache.StoreFile;
+import com.effective.hermes.constant.Constant;
+import com.effective.hermes.core.DefaultStoreFile;
+import com.effective.hermes.core.IndexBlock;
+import com.effective.hermes.core.StoreFile;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

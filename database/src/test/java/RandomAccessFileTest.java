@@ -75,11 +75,15 @@ public class RandomAccessFileTest {
 //            System.out.println(mappedByteBuffer.capacity());
 //            System.out.println(mappedByteBuffer.remaining());
 //            System.out.println(mappedByteBuffer.limit());
+        ByteBuffer byteBuffer = mappedByteBuffer.asReadOnlyBuffer();
 
+//            byte[] buffer = new byte[mappedByteBuffer.capacity()];
+//            mappedByteBuffer.get(buffer, 0 , mappedByteBuffer.capacity());
+//            mappedByteBuffer.clear();
 
-            byte[] buffer = new byte[mappedByteBuffer.capacity()];
-            mappedByteBuffer.get(buffer, 0 , mappedByteBuffer.capacity());
-            mappedByteBuffer.clear();
+            byte[] buffer = new byte[byteBuffer.capacity()];
+            byteBuffer.get(buffer, 0 , byteBuffer.capacity());
+            byteBuffer.clear();
             String s = new String(buffer);
             System.out.println(s);
 //

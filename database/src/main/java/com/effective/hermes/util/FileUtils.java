@@ -6,13 +6,12 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * filename: FileReaderUtil
+ * filename: FileUtils
  * Description:
  * Author: ubuntu
  * Date: 1/24/18 4:43 PM
  */
-public class FileReaderUtil {
-
+public class FileUtils {
     public static ByteBuffer read(FileChannel fileChannel, long offset, long length) throws IOException {
         MappedByteBuffer buffer = null;
         try {
@@ -21,6 +20,12 @@ public class FileReaderUtil {
         } finally {
             if(buffer != null) ByteBufferUtils.release(buffer);
         }
+    }
+
+    public static void write(FileChannel fileChannel, ByteBuffer byteBuffer) throws IOException {
+        byteBuffer.flip();
+        fileChannel.write(byteBuffer);
+        byteBuffer.clear();
     }
 
  }

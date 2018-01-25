@@ -1,5 +1,7 @@
-package com.effective.hermes.cache;
+package com.effective.hermes.core;
 
+
+import java.nio.ByteBuffer;
 
 /**
  * filename: RowKey
@@ -8,5 +10,5 @@ package com.effective.hermes.cache;
  * Date: 1/23/18 11:33 AM
  */
 public interface RowKey extends Comparable<RowKey>{
-
+    ByteBuffer getKey();
 }

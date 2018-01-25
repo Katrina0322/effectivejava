@@ -1,4 +1,4 @@
-package com.effective.hermes.cache;
+package com.effective.hermes.core;
 
 /**
  * filename: DefaultStoreFile
@@ -21,11 +21,16 @@ public class DefaultStoreFile implements StoreFile {
 
     @Override
     public String getLocation() {
-        return null;
+        return location;
     }
 
     @Override
     public IndexBlock getIndexBlock() {
-        return null;
+        return indexBlock;
+    }
+
+    @Override
+    public void setIndexBlock(IndexBlock indexBlock) {
+        this.indexBlock = indexBlock;
     }
 }

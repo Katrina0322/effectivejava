@@ -1,4 +1,4 @@
-package com.effective.hermes.cache;
+package com.effective.hermes.core;
 
 
 /**
@@ -10,4 +10,5 @@ package com.effective.hermes.cache;
 public interface StoreFile {
     String getLocation();
     IndexBlock getIndexBlock();
+    void setIndexBlock(IndexBlock indexBlock);
 }

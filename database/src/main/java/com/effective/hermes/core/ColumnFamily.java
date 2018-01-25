@@ -1,4 +1,4 @@
-package com.effective.hermes.cache;
+package com.effective.hermes.core;
 
 import java.util.NavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -14,6 +14,9 @@ public class ColumnFamily implements HeapSize{
 
     private transient volatile long heapSize;
 
+    public NavigableMap<String, Column> getFamily() {
+        return family;
+    }
 
     public void add(String key, Column column){
         Column old = family.put(key, column);

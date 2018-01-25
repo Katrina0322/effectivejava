@@ -1,4 +1,4 @@
-package com.effective.hermes.cache;
+package com.effective.hermes.core;
 
 import java.util.List;
 

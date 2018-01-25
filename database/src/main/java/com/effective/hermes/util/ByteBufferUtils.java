@@ -46,8 +46,17 @@ public final class ByteBufferUtils {
         }
     }
 
-    public static void putInt(OutputStream out, final int value) throws IOException {
-        StreamUtils.writeInt(out, value);
+    public byte[] readBuffer(ByteBuffer byteBuffer){
+        byte[] bytes = new byte[byteBuffer.limit()];
+        byteBuffer.get(bytes);
+        return bytes;
+    }
+
+    public static void writeInt(ByteBuffer buffer, final int value) throws IOException {
+        buffer.put((byte) (0xff & (value >> 24)));
+        buffer.put((byte) (0xff & (value >> 16)));
+        buffer.put((byte) (0xff & (value >> 8)));
+        buffer.put((byte) (0xff & value));
     }
 
     public static void release(ByteBuffer byteBuffer){
@@ -67,5 +76,32 @@ public final class ByteBufferUtils {
                 return null;
             }
         });
+    }
+
+    public static void main(String[] args) {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        System.out.println(byteBuffer.position());
+        System.out.println(byteBuffer.remaining());
+        System.out.println(byteBuffer.capacity());
+        System.out.println(byteBuffer.limit());
+        System.out.println(byteBuffer.mark());
+        byteBuffer.putChar('A');
+        byteBuffer.putChar('B');
+        System.out.println();
+        System.out.println(byteBuffer.position());
+        System.out.println(byteBuffer.remaining());
+        System.out.println(byteBuffer.capacity());
+        System.out.println(byteBuffer.limit());
+        System.out.println(byteBuffer.mark());
+        byteBuffer.flip();
+        System.out.println();
+        System.out.println(byteBuffer.position());
+        System.out.println(byteBuffer.remaining());
+        System.out.println(byteBuffer.capacity());
+        System.out.println(byteBuffer.limit());
+        System.out.println(byteBuffer.mark());
+        byte[] bytes = new byte[byteBuffer.remaining()];
+        byteBuffer.get(bytes);
+        System.out.println(new String(bytes));
     }
 }
