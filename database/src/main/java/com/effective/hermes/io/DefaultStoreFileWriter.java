@@ -1,6 +1,5 @@
 package com.effective.hermes.io;
 
-import com.effective.hermes.common.IndexTuple;
 import com.effective.hermes.constant.Constant;
 import com.effective.hermes.core.*;
 
@@ -9,8 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
 
@@ -36,12 +33,26 @@ public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCl
         byteBuffer.clear();
         NavigableMap<RowKey, ColumnFamily> columns = memtable.getMemtable();
         IndexBlock indexBlock = new IndexBlock();
+        long blockLength = 0;
+        int keySize = 0;
         for(Map.Entry<RowKey, ColumnFamily> columnFamilyEntry:columns.entrySet()){
             RowKey rowKey = columnFamilyEntry.getKey();
             ColumnFamily columnFamily = columnFamilyEntry.getValue();
-
+            NavigableMap<String, Column> columnNavigableMap = columnFamily.getFamily();
+            for(Map.Entry<String, Column> columnEntry:columnNavigableMap.entrySet()){
+                byte[] name = columnEntry.getKey().getBytes();
+                byte[] value = columnEntry.getValue().getColumValue();
+                long timeStamp = columnEntry.getValue().getTimestamp();
+                byteBuffer.putInt(name.length);
+                byteBuffer.putInt(value.length);
+                byteBuffer.put(name);
+                byteBuffer.put(value);
+                byteBuffer.putLong(timeStamp);
+            }
+            keySize++;
         }
-        return null;
+        storeFile.setIndexBlock(indexBlock);
+        return storeFile;
     }
 
     private boolean checkEnough(ByteBuffer byteBuffer, long size){
@@ -57,6 +68,8 @@ public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCl
 
     @Override
     public void close() throws Exception {
-
+        fileChannel.close();
+        fileOutputStream.flush();
+        fileOutputStream.close();
     }
 }

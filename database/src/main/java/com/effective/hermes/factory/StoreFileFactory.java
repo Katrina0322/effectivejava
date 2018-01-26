@@ -19,8 +19,7 @@ public class StoreFileFactory {
         String fileName = createName();
         IndexBlock index = new IndexBlock();
         String location = Constant.DATA_PATH + "/" + tableName + "/" + fileName;
-        StoreFile storeFile = new DefaultStoreFile(location, index);
-        return storeFile;
+        return new DefaultStoreFile(location, index);
     }
 
     private String createName() {
