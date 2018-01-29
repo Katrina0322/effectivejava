@@ -12,5 +12,15 @@
     <artifactId>database</artifactId>
     <version>0.1</version>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.datastax.cassandra/cassandra-driver-core -->
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>3.3.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 
 </project>
