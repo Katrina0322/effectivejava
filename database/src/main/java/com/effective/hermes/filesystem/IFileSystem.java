@@ -5,4 +5,7 @@ package com.effective.hermes.filesystem;
  * Created by spark on 18-1-30.
  */
 public interface IFileSystem {
+    boolean isFile(String path);
+    boolean isDirectory(String path);
+
 }
