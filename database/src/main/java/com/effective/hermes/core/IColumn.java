@@ -1,14 +1,14 @@
 package com.effective.hermes.core;
 
 /**
- * filename: Column
+ * filename: IColumn
  * Description:
  * Author: ubuntu
  * Date: 1/11/18 2:23 PM
  */
-public interface Column extends HeapSize{
-     byte[] getColumName();
-     byte[] getColumValue();
+public interface IColumn extends HeapSize, Comparable<IColumn>{
+     byte[] getColumnName();
+     byte[] getColumnValue();
      long getTimestamp();
 
     Type getType();
@@ -18,7 +18,7 @@ public interface Column extends HeapSize{
 
         Delete((byte) 8),
 
-        DeleteFamilyVersion((byte) 10),
+//        DeleteFamilyVersion((byte) 10),
 
         DeleteColumn((byte) 12);
 

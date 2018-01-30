@@ -10,20 +10,20 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * Date: 1/11/18 2:15 PM
  */
 public class ColumnFamily implements HeapSize{
-    private NavigableMap<String, Column> family = new ConcurrentSkipListMap<>();
+    private NavigableMap<String, IColumn> family = new ConcurrentSkipListMap<>();
 
     private transient volatile long heapSize;
 
-    public NavigableMap<String, Column> getFamily() {
+    public NavigableMap<String, IColumn> getFamily() {
         return family;
     }
 
-    public void add(String key, Column column){
-        Column old = family.put(key, column);
+    public void add(String key, IColumn column){
+        IColumn old = family.put(key, column);
         if(old == null) heapSize += column.heapSize();
     }
 
-    public Column get(String key){
+    public IColumn get(String key){
         return family.get(key);
     }
 
