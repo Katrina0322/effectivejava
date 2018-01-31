@@ -18,16 +18,16 @@ import java.util.NavigableMap;
  * Date: 1/23/18 6:15 PM
  */
 public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCloseable {
-    private StoreFile storeFile;
+    private IStoreFile storeFile;
     private FileOutputStream fileOutputStream;
     private FileChannel fileChannel;
 
-    public DefaultStoreFileWriter(StoreFile storeFile) {
+    public DefaultStoreFileWriter(IStoreFile storeFile) {
         this.storeFile = storeFile;
     }
 
     @Override
-    public StoreFile write(Memtable memtable) {
+    public IStoreFile write(Memtable memtable) {
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(Constant.TRUNK_SIZE);
         byteBuffer.clear();
@@ -38,10 +38,10 @@ public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCl
         for(Map.Entry<RowKey, ColumnFamily> columnFamilyEntry:columns.entrySet()){
             RowKey rowKey = columnFamilyEntry.getKey();
             ColumnFamily columnFamily = columnFamilyEntry.getValue();
-            NavigableMap<String, Column> columnNavigableMap = columnFamily.getFamily();
-            for(Map.Entry<String, Column> columnEntry:columnNavigableMap.entrySet()){
+            NavigableMap<String, IColumn> columnNavigableMap = columnFamily.getFamily();
+            for(Map.Entry<String, IColumn> columnEntry:columnNavigableMap.entrySet()){
                 byte[] name = columnEntry.getKey().getBytes();
-                byte[] value = columnEntry.getValue().getColumValue();
+                byte[] value = columnEntry.getValue().getColumnValue();
                 long timeStamp = columnEntry.getValue().getTimestamp();
                 byteBuffer.putInt(name.length);
                 byteBuffer.putInt(value.length);

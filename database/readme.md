@@ -8,7 +8,100 @@
 单机扩展到集群后，会增加一致性，分区路由，数据传输等模块，单机下的一些模块也会有所变化。
 
 ### 文件系统 ###
-首先，我们设计文件系统接口IFileSystem(所有非功能接口我们都加上前缀I).为什么要设计这个接口，默认我们使用基于服务器的本地文件系统来操作文件。在这里，我的想法是为了以后适配hdfs等其他厂商自定义的文件系统。
+首先，我们设计文件系统接口IFileSystem和IFile。IFileSystem只是为了包装不同的文件系统。默认为操作系统的文件系统。IFile主要是为了包装不同的文件。
+IFileSystem我们暂且不去管它，IFile接口如下,Mode是一个Enum,只有READ和WRITE。
+```
+public interface IFile<T> extends Closeable{
+    boolean delete();
+    boolean exists();
+    boolean isDirectory();
+    T open(Mode mode) throws FileNotFoundException;
+    String getPath();
+    List<IFile> listFiles();
+}
+```
+然后提供一个LocalFile，仅仅只是包装了File,并且是线程不安全的
+```
+public class LocalFile implements IFile<FileChannel> {
+    private File file;
+    private FileInputStream fileInputStream;
+    private FileOutputStream fileOutputStream;
+
+    public LocalFile(File file) {
+        this.file = file;
+    }
+
+    public LocalFile(String path) {
+        this.file = new File(path);
+    }
+
+    @Override
+    public boolean delete() {
+        return file.delete();
+    }
+
+    @Override
+    public boolean exists() {
+        return file.exists();
+    }
+
+    @Override
+    public boolean isDirectory() {
+        return file.isDirectory();
+    }
+
+    @Override
+    public FileChannel open(Mode mode) throws FileNotFoundException {
+        FileChannel fileChannel = null;
+        synchronized (this) {
+            switch (mode) {
+                case READ:
+                    if (fileInputStream == null) {
+                        fileInputStream = new FileInputStream(file);
+                    }
+                    fileChannel = fileInputStream.getChannel();
+                    break;
+                case WRITE:
+                    if (fileOutputStream == null) {
+                        fileOutputStream = new FileOutputStream(file);
+                    }
+                    fileChannel = fileOutputStream.getChannel();
+                    break;
+            }
+        }
+        return fileChannel;
+    }
+
+    @Override
+    public String getPath() {
+        return file.getAbsolutePath();
+    }
+
+    @Override
+    public List<IFile> listFiles() {
+        File[] files = file.listFiles();
+        if(files == null) return new ArrayList<>(0);
+        List<IFile> result = new ArrayList<>(files.length);
+        for(File file:files){
+            IFile iFile = new LocalFile(file);
+            result.add(iFile);
+        }
+        return result;
+    }
+
+    @Override
+    public void close() throws IOException {
+        if(fileInputStream != null){
+            fileInputStream.close();
+        }
+        if(fileOutputStream != null){
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        }
+    }
+}
+
+```
 
 ### 存储单元 ###
 存储模块,我们借鉴Hbase和Cassandra的设计思想,采用列示存储.其中主要是借鉴Cassandra的存储结构,仍然以行为单位进行存储.Hbase的列存储,每一个单独的cell都存储了大量重复的字段,如果表的列设计过多,会浪费大量的存储.

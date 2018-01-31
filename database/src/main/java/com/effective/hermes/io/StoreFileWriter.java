@@ -1,6 +1,6 @@
 package com.effective.hermes.io;
 
-import com.effective.hermes.core.StoreFile;
+import com.effective.hermes.core.IStoreFile;
 
 /**
  * filename: StoreFileWriter
@@ -9,5 +9,5 @@ import com.effective.hermes.core.StoreFile;
  * Date: 1/23/18 9:35 AM
  */
 public interface StoreFileWriter<T> {
-    StoreFile write(T t);
+    IStoreFile write(T t);
 }
