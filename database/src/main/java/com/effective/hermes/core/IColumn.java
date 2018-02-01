@@ -18,8 +18,6 @@ public interface IColumn extends HeapSize, Comparable<IColumn>{
 
         Delete((byte) 8),
 
-//        DeleteFamilyVersion((byte) 10),
-
         DeleteColumn((byte) 12);
 
         private final byte code;

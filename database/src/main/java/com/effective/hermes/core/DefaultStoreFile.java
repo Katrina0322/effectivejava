@@ -6,7 +6,7 @@ package com.effective.hermes.core;
  * Author: ubuntu
  * Date: 1/23/18 3:47 PM
  */
-public class DefaultStoreFile implements StoreFile {
+public class DefaultStoreFile implements IStoreFile {
     private String location;
     private IndexBlock indexBlock;
 

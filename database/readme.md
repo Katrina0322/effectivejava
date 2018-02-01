@@ -127,10 +127,13 @@ public interface Snapshot<T> {
 ### 磁盘存储 ###
 #### StoreFile ####
 ### 数据写入 ###
+策略模式，不同的需求，不同的写入模式
+抽象工厂模式
 #### StoreFileWriter ####
 ### 数据读取 ###
 ### 文件合并 ###
 ### 本地server设计 ###
+建造者
 ## 集群设计 ##
 ### p2p gossip协议 ###
 ### 数据写入与一致性hash ###

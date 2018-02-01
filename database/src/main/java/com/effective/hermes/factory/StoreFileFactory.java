@@ -2,9 +2,8 @@ package com.effective.hermes.factory;
 
 import com.effective.hermes.constant.Constant;
 import com.effective.hermes.core.DefaultStoreFile;
+import com.effective.hermes.core.IStoreFile;
 import com.effective.hermes.core.IndexBlock;
-import com.effective.hermes.core.StoreFile;
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -15,7 +14,7 @@ import java.net.UnknownHostException;
  * Date: 1/23/18 6:17 PM
  */
 public class StoreFileFactory {
-    public StoreFile createStoreFile(String tableName){
+    public IStoreFile createStoreFile(String tableName){
         String fileName = createName();
         IndexBlock index = new IndexBlock();
         String location = Constant.DATA_PATH + "/" + tableName + "/" + fileName;
