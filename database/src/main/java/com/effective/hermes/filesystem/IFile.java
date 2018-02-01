@@ -17,4 +17,8 @@ public interface IFile<T> extends Closeable{
     T open(Mode mode) throws FileNotFoundException;
     String getPath();
     List<IFile> listFiles();
+
+    enum Mode {
+        READ, WRITE
+    }
 }

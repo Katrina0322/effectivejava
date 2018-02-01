@@ -7,21 +7,21 @@ import java.util.List;
 
 
 /**
- * filename: LocalFile
+ * filename: DefaultFile
  * Description:
  * Author: ubuntu
  * Date: 1/31/18 4:12 PM
  */
-public class LocalFile implements IFile<FileChannel> {
+public class DefaultFile implements IFile<FileChannel> {
     private File file;
     private FileInputStream fileInputStream;
     private FileOutputStream fileOutputStream;
 
-    public LocalFile(File file) {
+    public DefaultFile(File file) {
         this.file = file;
     }
 
-    public LocalFile(String path) {
+    public DefaultFile(String path) {
         this.file = new File(path);
     }
 
@@ -73,7 +73,7 @@ public class LocalFile implements IFile<FileChannel> {
         if(files == null) return new ArrayList<>(0);
         List<IFile> result = new ArrayList<>(files.length);
         for(File file:files){
-            IFile iFile = new LocalFile(file);
+            IFile iFile = new DefaultFile(file);
             result.add(iFile);
         }
         return result;

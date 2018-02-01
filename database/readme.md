@@ -18,20 +18,24 @@ public interface IFile<T> extends Closeable{
     T open(Mode mode) throws FileNotFoundException;
     String getPath();
     List<IFile> listFiles();
+
+    enum Mode {
+        READ, WRITE
+    }
 }
 ```
-然后提供一个LocalFile，仅仅只是包装了File,并且是线程不安全的
+DefaultFile，仅仅只是包装了File,并且是线程不安全的.这里有很多问题,我们暂且不管,先实现大体的架构
 ```
-public class LocalFile implements IFile<FileChannel> {
+public class DefaultFile implements IFile<FileChannel> {
     private File file;
     private FileInputStream fileInputStream;
     private FileOutputStream fileOutputStream;
 
-    public LocalFile(File file) {
+    public DefaultFile(File file) {
         this.file = file;
     }
 
-    public LocalFile(String path) {
+    public DefaultFile(String path) {
         this.file = new File(path);
     }
 
@@ -83,7 +87,7 @@ public class LocalFile implements IFile<FileChannel> {
         if(files == null) return new ArrayList<>(0);
         List<IFile> result = new ArrayList<>(files.length);
         for(File file:files){
-            IFile iFile = new LocalFile(file);
+            IFile iFile = new DefaultFile(file);
             result.add(iFile);
         }
         return result;
@@ -103,9 +107,20 @@ public class LocalFile implements IFile<FileChannel> {
 
 ```
 
-### 存储单元 ###
-存储模块,我们借鉴Hbase和Cassandra的设计思想,采用列示存储.其中主要是借鉴Cassandra的存储结构,仍然以行为单位进行存储.Hbase的列存储,每一个单独的cell都存储了大量重复的字段,如果表的列设计过多,会浪费大量的存储.
-#### Colum设计 ####
+
+### 存储模块 ###
+我们将存储模块分为内存存储和磁盘存储。借鉴Hbase和Cassandra的设计思想,我们先对操作写日志（CommitLog),然后将写入的数据先存储到内存中的某个结构中（Memtable),当满足一定的条件时（大小时间等限制）,将Memtable按照我们定义的格式写入SSTable.这里主要是借鉴Cassandra的存储结构,仍然以行为单位进行存储.Hbase的列存储,每一个单独的cell都存储了大量重复的字段,如果表的列设计过多,会浪费大量的存储.
+对于内存中的数据，我们需要先设计两个功能型接口，HeapSize和Snapshot。功能型接口，就是一看接口名就知道他的功能是什么，顾名思义，HeapSize就是获取当前对象占用内存，Snapshot就是获取一个快照，类似于深度克隆。
+```
+public interface HeapSize {
+    long heapSize();
+}
+
+public interface Snapshot<T> {
+    T snapshot();
+}
+```
+#### 列单元Colum设计 ####
 最底层存储单元,我们设计IColumn接口,方法暂定为获取ColumnName,ColumnValue,Timestamp,Type(插入,删除);
 #### ColumFamily设计 ####
 #### Memtable设计 ####
