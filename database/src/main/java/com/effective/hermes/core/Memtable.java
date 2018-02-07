@@ -16,15 +16,15 @@ public class Memtable implements HeapSize, Snapshot<Memtable> {
     private StoreFileWriter<Memtable> storeFileWriter;
     private transient long heapSize;
 
-    public void add(RowKey rowKey, Column column){
+    public void add(RowKey rowKey, IColumn column){
         ColumnFamily old = memtable.get(rowKey);
         if(old == null){
             ColumnFamily newFamily = new ColumnFamily();
-            newFamily.add(new String(column.getColumName()), column);
+            newFamily.add(new String(column.getColumnName()), column);
             memtable.put(rowKey, newFamily);
             heapSize += newFamily.heapSize();
         }else {
-            old.add(new String(column.getColumName()), column);
+            old.add(new String(column.getColumnName()), column);
         }
     }
 
@@ -40,7 +40,7 @@ public class Memtable implements HeapSize, Snapshot<Memtable> {
         return heapSize > 111;
     }
 
-    private StoreFile flushToDisk(){
+    private IStoreFile flushToDisk(){
         Memtable snapshot = snapshot();
         return storeFileWriter.write(snapshot);
     }

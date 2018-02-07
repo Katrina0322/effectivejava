@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Table {
     private String tableName;
-    private List<StoreFile> storeFiles;
+    private List<IStoreFile> storeFiles;
     private TableDescript descript;
     private Memtable memtables;
 

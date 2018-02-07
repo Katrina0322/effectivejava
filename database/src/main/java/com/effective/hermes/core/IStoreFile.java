@@ -9,6 +9,6 @@ package com.effective.hermes.core;
  */
 public interface IStoreFile {
     String getLocation();
-    IndexBlock getIndexBlock();
     void setIndexBlock(IndexBlock indexBlock);
+    IndexBlock getIndexBlock();
 }

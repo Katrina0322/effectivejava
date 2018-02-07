@@ -6,7 +6,7 @@ package com.effective.hermes.core;
  * Author: ubuntu
  * Date: 1/11/18 2:23 PM
  */
-public interface IColumn extends HeapSize, Comparable<IColumn>{
+public interface IColumn extends Comparable<IColumn>{
      byte[] getColumnName();
      byte[] getColumnValue();
      long getTimestamp();

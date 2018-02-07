@@ -20,7 +20,6 @@ public class ColumnFamily implements HeapSize{
 
     public void add(String key, IColumn column){
         IColumn old = family.put(key, column);
-        if(old == null) heapSize += column.heapSize();
     }
 
     public IColumn get(String key){
