@@ -9,17 +9,17 @@ import com.effective.hermes.net.EndPoint;
  * Date: 1/26/18 11:44 AM
  */
 public class GossipDigest implements Comparable<GossipDigest>{
-    private EndPoint endPoint;
+    private InetAddressAndPort endPoint;
     private int generation;
     private int maxVersion;
 
-    public GossipDigest(EndPoint endPoint, int generation, int maxVersion) {
+    public GossipDigest(InetAddressAndPort endPoint, int generation, int maxVersion) {
         this.endPoint = endPoint;
         this.generation = generation;
         this.maxVersion = maxVersion;
     }
 
-    public EndPoint getEndPoint() {
+    public InetAddressAndPort getEndPoint() {
         return endPoint;
     }
 
@@ -36,7 +36,7 @@ public class GossipDigest implements Comparable<GossipDigest>{
         if(generation != o.generation){
             return generation - o.generation;
         }
-        return maxVersion = o.maxVersion;
+        return maxVersion - o.maxVersion;
     }
 
     public String toString()

@@ -2,6 +2,7 @@ package com.effective.hermes.gossip;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * filename: EndPointState
@@ -10,18 +11,21 @@ import java.util.concurrent.ConcurrentHashMap;
  * Date: 1/26/18 11:14 AM
  */
 public class EndPointState {
-    private HeartBeatState heartBeatState;
-    Map<String, ApplicationState> applicationState = new ConcurrentHashMap<>();
+    private volatile HeartBeatState heartBeatState;
+    private final AtomicReference<Map<ApplicationState, VersionedValue>> applicationState;
 
-    private transient long updateTimestamp;
-    private transient boolean isAlive;
-    private transient boolean isAGossiper;
+    private volatile long updateTimestamp;
+    private volatile  boolean isAlive;
 
-    EndPointState(HeartBeatState heartBeatState) {
+    public EndPointState(HeartBeatState heartBeatState) {
         this.heartBeatState = heartBeatState;
         updateTimestamp = System.currentTimeMillis();
         isAlive = true;
-        isAGossiper = false;
+    }
+
+    public EndPointState(<Map<String, ApplicationState> states, HeartBeatState heartBeatState) {
+        this.applicationState = applicationState;
+        this.heartBeatState = heartBeatState;
     }
 
     public HeartBeatState getHeartBeatState() {
@@ -34,10 +38,6 @@ public class EndPointState {
 
     public boolean isAlive() {
         return isAlive;
-    }
-
-    public boolean isAGossiper() {
-        return isAGossiper;
     }
 
     public void setHeartBeatState(HeartBeatState heartBeatState) {
