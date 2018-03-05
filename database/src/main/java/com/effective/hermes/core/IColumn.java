@@ -18,7 +18,7 @@ public interface IColumn extends Comparable<IColumn>{
 
         Delete((byte) 8),
 
-        DeleteColumn((byte) 12);
+        DeleteColumnFamily((byte) 12);
 
         private final byte code;
 

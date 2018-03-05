@@ -1,6 +1,8 @@
 package com.effective.hermes.core;
 
-import com.effective.hermes.io.StoreFileWriter;
+
+import com.effective.hermes.constant.Constant;
+import com.effective.hermes.io.SSTableWirter;
 
 import java.util.NavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -12,37 +14,58 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * Date: 1/22/18 2:46 PM
  */
 public class Memtable implements HeapSize, Snapshot<Memtable> {
-    private NavigableMap<RowKey, ColumnFamily> memtable = new ConcurrentSkipListMap<>();
-    private StoreFileWriter<Memtable> storeFileWriter;
+    private NavigableMap<Rowkey, IColumnFamily> memtable = new ConcurrentSkipListMap<>();
+
+    private volatile boolean flush;
     private transient long heapSize;
 
-    public void add(RowKey rowKey, IColumn column){
-        ColumnFamily old = memtable.get(rowKey);
-        if(old == null){
-            ColumnFamily newFamily = new ColumnFamily();
+    private SSTableWirter<Memtable> ssTableWirter;
+
+    public Memtable(NavigableMap<Rowkey, IColumnFamily> memtable) {
+        this.memtable = memtable;
+    }
+
+    public void add(Rowkey rowKey, IColumn column){
+        if(flush) return;
+        IColumnFamily old = memtable.get(rowKey);
+        if(old == null) {
+            IColumnFamily newFamily = new ColumnFamily();
             newFamily.add(new String(column.getColumnName()), column);
             memtable.put(rowKey, newFamily);
-            heapSize += newFamily.heapSize();
         }else {
             old.add(new String(column.getColumnName()), column);
         }
     }
 
-    public ColumnFamily getFamily(RowKey rowKey){
+    public long getHeapSize() {
+        return heapSize;
+    }
+
+    public IColumnFamily getFamily(Rowkey rowKey){
         return memtable.get(rowKey);
     }
 
-    public NavigableMap<RowKey, ColumnFamily> getMemtable() {
+    public NavigableMap<Rowkey, IColumnFamily> getMemtable() {
         return memtable;
     }
 
+    /**
+     * if ready to flush to disk
+     * @return
+     */
     private boolean checkFlush() {
         return heapSize > 111;
     }
 
-    private IStoreFile flushToDisk(){
+    private void flushToDisk(){
         Memtable snapshot = snapshot();
-        return storeFileWriter.write(snapshot);
+        flush = true;
+        Constant.SERVICE.submit(new Runnable() {
+            @Override
+            public void run() {
+                ssTableWirter.write(snapshot);
+            }
+        });
     }
 
     @Override
@@ -53,6 +76,8 @@ public class Memtable implements HeapSize, Snapshot<Memtable> {
 
     @Override
     public Memtable snapshot() {
-        return null;
+        NavigableMap<Rowkey, IColumnFamily> readOnly = new ConcurrentSkipListMap<>(memtable);
+        return new Memtable(readOnly);
     }
+
 }

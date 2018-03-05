@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * Author: ubuntu
  * Date: 1/11/18 2:15 PM
  */
-public class ColumnFamily implements HeapSize{
+public class ColumnFamily implements IColumnFamily{
     private NavigableMap<String, IColumn> family = new ConcurrentSkipListMap<>();
 
     private transient volatile long heapSize;

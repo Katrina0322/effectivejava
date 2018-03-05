@@ -1,6 +1,5 @@
 package com.effective.hermes.gossip;
 
-import com.effective.hermes.net.EndPoint;
 
 /**
  * filename: GossipDigest
@@ -41,13 +40,11 @@ public class GossipDigest implements Comparable<GossipDigest>{
 
     public String toString()
     {
-        StringBuilder sb = new StringBuilder();
-        sb.append(endPoint);
-        sb.append(":");
-        sb.append(generation);
-        sb.append(":");
-        sb.append(maxVersion);
-        return sb.toString();
+        return String.valueOf(endPoint) +
+                ":" +
+                generation +
+                ":" +
+                maxVersion;
     }
 
 }

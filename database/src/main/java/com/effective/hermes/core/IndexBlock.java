@@ -12,23 +12,23 @@ import java.util.concurrent.ConcurrentSkipListMap;
  * Date: 1/23/18 3:46 PM
  */
 public class IndexBlock {
-    private ConcurrentSkipListMap<RowKey, IndexTuple> indexRange;
+    private ConcurrentSkipListMap<Rowkey, IndexTuple> indexRange;
 
     public IndexBlock() {
         indexRange = new ConcurrentSkipListMap<>();
     }
 
-    public void addIndex(RowKey key, long offset,  long length){
+    public void addIndex(Rowkey key, long offset, long length){
         indexRange.put(key, new IndexTuple(offset, length));
     }
 
-    public IndexTuple getIndexTuple(RowKey key){
+    public IndexTuple getIndexTuple(Rowkey key){
         return indexRange.floorEntry(key).getValue();
     }
 
-    public boolean checkExist(RowKey key){
-        RowKey low = indexRange.firstKey();
-        RowKey high = indexRange.lastKey();
+    public boolean checkExist(Rowkey key){
+        Rowkey low = indexRange.firstKey();
+        Rowkey high = indexRange.lastKey();
         return key.compareTo(low) >= 0 && key.compareTo(high) <= 0;
     }
 

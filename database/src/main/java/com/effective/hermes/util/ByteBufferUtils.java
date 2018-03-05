@@ -46,7 +46,7 @@ public final class ByteBufferUtils {
         }
     }
 
-    public byte[] readBuffer(ByteBuffer byteBuffer){
+    public static byte[] readBuffer(ByteBuffer byteBuffer){
         byte[] bytes = new byte[byteBuffer.limit()];
         byteBuffer.get(bytes);
         return bytes;

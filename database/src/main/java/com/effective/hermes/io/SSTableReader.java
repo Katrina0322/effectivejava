@@ -1,10 +1,11 @@
 package com.effective.hermes.io;
 
 /**
- * filename: StoreFileReader
+ * filename: SSTableReader
  * Description:
  * Author: ubuntu
  * Date: 1/24/18 4:37 PM
  */
-public interface StoreFileReader {
+public interface SSTableReader<T> {
+    T read(long start, long size);
 }

@@ -12,33 +12,30 @@ import java.util.Map;
 import java.util.NavigableMap;
 
 /**
- * filename: DefaultStoreFileWriter
+ * filename: DefaultSSTableWriter
  * Description:
  * Author: ubuntu
  * Date: 1/23/18 6:15 PM
  */
-public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCloseable {
-    private IStoreFile storeFile;
-    private FileOutputStream fileOutputStream;
-    private FileChannel fileChannel;
+public class DefaultSSTableWriter implements SSTableWirter<Memtable>, AutoCloseable {
+    private IFileWriter iFileWriter;
 
-    public DefaultStoreFileWriter(IStoreFile storeFile) {
-        this.storeFile = storeFile;
+    public DefaultSSTableWriter(IFileWriter iFileWriter) {
+        this.iFileWriter = iFileWriter;
     }
 
     @Override
-    public IStoreFile write(Memtable memtable) {
-
+    public void write(Memtable memtable) {
         ByteBuffer byteBuffer = ByteBuffer.allocate(Constant.TRUNK_SIZE);
         byteBuffer.clear();
-        NavigableMap<RowKey, ColumnFamily> columns = memtable.getMemtable();
+        NavigableMap<Rowkey, IColumnFamily> columns = memtable.getMemtable();
         IndexBlock indexBlock = new IndexBlock();
         long blockLength = 0;
         int keySize = 0;
-        for(Map.Entry<RowKey, ColumnFamily> columnFamilyEntry:columns.entrySet()){
-            RowKey rowKey = columnFamilyEntry.getKey();
-            ColumnFamily columnFamily = columnFamilyEntry.getValue();
-            NavigableMap<String, IColumn> columnNavigableMap = columnFamily.getFamily();
+        for(Map.Entry<Rowkey, IColumnFamily> columnFamilyEntry:columns.entrySet()){
+            Rowkey rowKey = columnFamilyEntry.getKey();
+            IColumnFamily columnFamily = columnFamilyEntry.getValue();
+            Map<String, IColumn> columnNavigableMap = columnFamily.getFamily();
             for(Map.Entry<String, IColumn> columnEntry:columnNavigableMap.entrySet()){
                 byte[] name = columnEntry.getKey().getBytes();
                 byte[] value = columnEntry.getValue().getColumnValue();
@@ -51,8 +48,6 @@ public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCl
             }
             keySize++;
         }
-        storeFile.setIndexBlock(indexBlock);
-        return storeFile;
     }
 
     private boolean checkEnough(ByteBuffer byteBuffer, long size){
@@ -60,16 +55,9 @@ public class DefaultStoreFileWriter implements StoreFileWriter<Memtable>, AutoCl
         return false;
     }
 
-    private void init() throws FileNotFoundException {
-        File file = new File(storeFile.getLocation());
-        fileOutputStream = new FileOutputStream(file);
-        fileChannel = fileOutputStream.getChannel();
-    }
 
     @Override
     public void close() throws Exception {
-        fileChannel.close();
-        fileOutputStream.flush();
-        fileOutputStream.close();
+
     }
 }
