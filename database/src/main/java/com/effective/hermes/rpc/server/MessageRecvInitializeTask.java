@@ -47,7 +47,6 @@ public class MessageRecvInitializeTask implements Callable<Boolean> {
         } catch (Throwable t) {
             response.setError(t.toString());
             t.printStackTrace();
-//            System.err.printf("RPC Server invoke error!\n");
             return Boolean.FALSE;
         }
     }

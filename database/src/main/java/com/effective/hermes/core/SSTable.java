@@ -10,6 +10,7 @@ import com.effective.hermes.io.SSTableReader;
 public class SSTable {
     private IndexBlock indexBlock;
     private SSTableReader<IColumnFamily> tableReader;
+    private volatile boolean isWritable;
 
     private String getTableName(){
         return null;

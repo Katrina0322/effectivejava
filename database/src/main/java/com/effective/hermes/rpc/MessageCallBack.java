@@ -12,13 +12,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * Date: 2/27/18 10:07 AM
  */
 public class MessageCallBack {
-    private MessageRequest request;
     private MessageResponse response;
     private Lock lock = new ReentrantLock();
     private Condition finish = lock.newCondition();
-    public MessageCallBack(MessageRequest request) {
-        this.request = request;
-    }
 
     public Object start() throws InterruptedException {
         try {

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * Author: ubuntu
  * Date: 2/27/18 11:11 AM
  */
+@Deprecated
 public enum RpcSerializeProtocol {
     JDKSERIALIZE("jdknative"), KRYOSERIALIZE("kryo"), HESSIANSERIALIZE("hessian");
     private String serializeProtocol;
