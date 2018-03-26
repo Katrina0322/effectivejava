@@ -24,6 +24,8 @@
         <module>dapper</module>
         <module>tomcat</module>
         <module>database</module>
+        <module>raft</module>
+        <module>gossip</module>
     </modules>
     <packaging>pom</packaging>
 
