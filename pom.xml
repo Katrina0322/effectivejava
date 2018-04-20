@@ -23,9 +23,9 @@
         <module>mymvc</module>
         <module>dapper</module>
         <module>tomcat</module>
-        <module>database</module>
         <module>raft</module>
         <module>gossip</module>
+        <module>mongodb</module>
     </modules>
     <packaging>pom</packaging>
 
