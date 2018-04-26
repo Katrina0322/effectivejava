@@ -1,14 +1,14 @@
 package com.ronglian.mongodb;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicate;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.ronglian.config.Constant;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
  * Created by spark on 4/19/18.
  */
 public class MongoUtil {
+    private static final Logger logger = LoggerFactory.getLogger(MongoUtil.class);
 
     private static volatile MongoClient mongoClient;
     private static MongoUtil instance = new MongoUtil();
@@ -32,12 +33,13 @@ public class MongoUtil {
             addrs.add(serverAddress);
         }
 
-        List<MongoCredential> credentials = new ArrayList<>();
-        MongoCredential credential = MongoCredential.createScramSha1Credential(Constant.USER, Constant.DATABASE, Constant.PASSWORD.toCharArray());
-
-        credentials.add(credential);
-        mongoClient = new MongoClient(addrs, credentials);
-        System.out.println("Connect to database successfully!");
+//        List<MongoCredential> credentials = new ArrayList<>();
+//        MongoCredential credential = MongoCredential.createScramSha1Credential(Constant.USER, Constant.DATABASE, Constant.PASSWORD.toCharArray());
+//
+//        credentials.add(credential);
+//        mongoClient = new MongoClient(addrs, credentials);
+        mongoClient = new MongoClient(addrs);
+        logger.info("Connect to database successfully!");
     }
 
     public static MongoUtil getInstance(){
@@ -53,7 +55,7 @@ public class MongoUtil {
         MongoDatabase mgdb = mongoClient.getDatabase(database);
         MongoCollection<Document> dbCollection = mgdb.getCollection(collection);
         dbCollection.insertMany(documents);
-        System.out.println("write data " + dbCollection.count());
+        logger.info("write data " + dbCollection.count());
     }
 
 }
