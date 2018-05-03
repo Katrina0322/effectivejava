@@ -2,6 +2,7 @@ package com.ronglian.mongodb;
 
 import com.google.common.base.Preconditions;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,11 +35,11 @@ public class MongoUtil {
             addrs.add(serverAddress);
         }
 
-//        List<MongoCredential> credentials = new ArrayList<>();
-//        MongoCredential credential = MongoCredential.createScramSha1Credential(Constant.USER, Constant.DATABASE, Constant.PASSWORD.toCharArray());
-//
-//        credentials.add(credential);
-//        mongoClient = new MongoClient(addrs, credentials);
+        List<MongoCredential> credentials = new ArrayList<>();
+        MongoCredential credential = MongoCredential.createScramSha1Credential(Constant.USER, Constant.DATABASE, Constant.PASSWORD.toCharArray());
+
+        credentials.add(credential);
+        mongoClient = new MongoClient(addrs, credentials);
         mongoClient = new MongoClient(addrs);
         logger.info("Connect to database successfully!");
     }
@@ -56,6 +58,12 @@ public class MongoUtil {
         MongoCollection<Document> dbCollection = mgdb.getCollection(collection);
         dbCollection.insertMany(documents);
         logger.info("write data " + dbCollection.count());
+    }
+
+    public void read(String database, String collection, String query){
+        MongoDatabase mgdb = mongoClient.getDatabase(database);
+        MongoCollection<Document> dbCollection = mgdb.getCollection(collection);
+        System.out.println(dbCollection.aggregate(Collections.singletonList(Document.parse(query))).first());
     }
 
 }

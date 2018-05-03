@@ -26,6 +26,7 @@
         <module>raft</module>
         <module>gossip</module>
         <module>mongodb</module>
+        <module>recommend</module>
     </modules>
     <packaging>pom</packaging>
 
