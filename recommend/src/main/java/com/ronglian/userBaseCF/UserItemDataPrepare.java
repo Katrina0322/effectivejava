@@ -16,7 +16,7 @@ public class UserItemDataPrepare implements DataPrepare<UserPrefer> {
     @Override
     public JavaRDD<UserPrefer> prepareData() {
 
-        return MongoUtils.loadData("rcmd", "user_action", "{ $project: { userId: 1, innerid: 1, opType: 1, opDatetime: 1,  _id: 0 }}", (DataTransFunction<Document, UserPrefer>) from -> {
+        return MongoUtils.loadData("rcmd", "user_action", "{$match: {code: { $exists: true }}},{$project: { userId: 1, code: 1, opType: 1, opDatetime: 1,  _id: 0 }}", (DataTransFunction<Document, UserPrefer>) from -> {
             UserPrefer userPrefer = new UserPrefer();
             userPrefer.setUserId(from.getString("userId"));
             userPrefer.setItemId(from.getString("innerid"));
