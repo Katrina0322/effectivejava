@@ -17,12 +17,12 @@ public class ConfigUtil {
 //		ZkClient zkClient = new ZkClient("192.168.200.6:2181");
 
 
-        List<String> topics = scala.collection.JavaConversions.seqAsJavaList(ZkUtils.getAllTopics(new ZkClient("112.65.234.8:2181")));
-
-
-        for (String topic : topics) {
-            System.out.println(topic);
-        }
+//        List<String> topics = scala.collection.JavaConversions.seqAsJavaList(ZkUtils.getAllTopics());
+//
+//
+//        for (String topic : topics) {
+//            System.out.println(topic);
+//        }
 
     }
 

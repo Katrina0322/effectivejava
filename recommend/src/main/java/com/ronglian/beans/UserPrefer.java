@@ -16,6 +16,12 @@ public class UserPrefer implements Serializable{
     public UserPrefer() {
     }
 
+    public UserPrefer(String userId, String itemId, double rating) {
+        this.userId = userId;
+        this.itemId = itemId;
+        this.rating = rating;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -46,5 +52,15 @@ public class UserPrefer implements Serializable{
 
     public void setOpTime(Date opTime) {
         this.opTime = opTime;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPrefer{" +
+                "userId='" + userId + '\'' +
+                ", itemId='" + itemId + '\'' +
+                ", rating=" + rating +
+                ", opTime=" + opTime +
+                '}';
     }
 }

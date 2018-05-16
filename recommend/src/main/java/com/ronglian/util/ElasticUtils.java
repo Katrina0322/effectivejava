@@ -14,7 +14,7 @@ import scala.collection.Map;
 public class ElasticUtils {
     public static <T> JavaRDD<T> query(String source, String query, DataTransFunction<Tuple2<String, Map<String, Object>>, T> trans){
         return EsSpark.esRDD(SparkConfig.getInstance().getJavaSparkContext().sc(), source, query)
-                .toJavaRDD().map((Function<Tuple2<String, Map<String, Object>>, T>) stringMapTuple2 -> trans.transform(stringMapTuple2));
+                .toJavaRDD().map((Function<Tuple2<String, Map<String, Object>>, T>) trans::transform);
 
     }
 }

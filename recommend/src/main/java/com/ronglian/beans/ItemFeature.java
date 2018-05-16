@@ -12,4 +12,42 @@ public class ItemFeature implements Serializable {
     private String feature;
     private double weight;
     private Date opTime;
+
+    public ItemFeature(String itemId, String feature, double weight) {
+        this.itemId = itemId;
+        this.feature = feature;
+        this.weight = weight;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getFeature() {
+        return feature;
+    }
+
+    public void setFeature(String feature) {
+        this.feature = feature;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public Date getOpTime() {
+        return opTime;
+    }
+
+    public void setOpTime(Date opTime) {
+        this.opTime = opTime;
+    }
 }

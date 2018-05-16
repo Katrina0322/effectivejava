@@ -40,10 +40,11 @@ public class LinearRegressionExample {
         String path  = resources + "libsvm_data.txt";
         Dataset<Row> training = sql.createDataFrame(MLUtils.loadLibSVMFile(sc, path).toJavaRDD(), LabeledPoint.class);
 
+//        System.out.println(training.first().toString());
         LinearRegression lr = new LinearRegression().setMaxIter(10).setRegParam(0.3).setElasticNetParam(0.8);
         LinearRegressionModel lrModel = lr.fit(training);
 //        System.out.println("Weights: " + lrModel.weights() + " Intercept: " + lrModel.intercept());
-            
+
         LinearRegressionTrainingSummary trainingSummary = lrModel.summary();
         System.out.println("numIterations: " + trainingSummary.totalIterations());
         System.out.println("objectiveHistory: " + Vectors.dense(trainingSummary.objectiveHistory()));

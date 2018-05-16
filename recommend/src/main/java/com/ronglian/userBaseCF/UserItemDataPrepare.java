@@ -19,7 +19,7 @@ public class UserItemDataPrepare implements DataPrepare<UserPrefer> {
         return MongoUtils.loadData("rcmd", "user_action", "{$match: {code: { $exists: true }}},{$project: { userId: 1, code: 1, opType: 1, opDatetime: 1,  _id: 0 }}", (DataTransFunction<Document, UserPrefer>) from -> {
             UserPrefer userPrefer = new UserPrefer();
             userPrefer.setUserId(from.getString("userId"));
-            userPrefer.setItemId(from.getString("innerid"));
+            userPrefer.setItemId(from.getString("code"));
             userPrefer.setOpTime(from.getDate("opDatetime"));
             userPrefer.setRating(OpType.valueOf(from.getString("opType").toUpperCase()).getRating());
             return userPrefer;
