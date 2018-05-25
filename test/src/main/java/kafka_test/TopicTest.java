@@ -30,18 +30,18 @@ import java.util.concurrent.locks.ReentrantLock;
 public class TopicTest {
 //    private static final ExecutorService executor = SharedPool.EXECUTOR;
 
-    public static void createTopic(String zooServer, String topicName, int partitions, int replicationFactor){
+    public static void createTopic(String zooServer, String topicName, int partitions, int replicationFactor) {
         ZkUtils zkUtils = ZkUtils.apply(zooServer, 30000, 30000, JaasUtils.isZkSecurityEnabled());
-        if(!AdminUtils.topicExists(zkUtils, topicName)) {
+        if (!AdminUtils.topicExists(zkUtils, topicName)) {
             AdminUtils.createTopic(zkUtils, topicName, partitions, replicationFactor, new Properties());
         }
 
         zkUtils.close();
     }
 
-    public static void deleteTopic(String zooServer, String topicName){
+    public static void deleteTopic(String zooServer, String topicName) {
         ZkUtils zkUtils = ZkUtils.apply(zooServer, 30000, 30000, JaasUtils.isZkSecurityEnabled());
-        if(AdminUtils.topicExists(zkUtils, topicName)) {
+        if (AdminUtils.topicExists(zkUtils, topicName)) {
             AdminUtils.deleteTopic(zkUtils, topicName);
         }
         zkUtils.close();
@@ -51,35 +51,35 @@ public class TopicTest {
         return number & 2147483647;
     }
 
-    public static void sendMessage(final String topicName, final String message){
+    public static void sendMessage(final String topicName, final String message) {
 //        final CountDownLatch start = new CountDownLatch(1);
         Properties props = new Properties();
-        props.put("bootstrap.servers", "10.128.5.14:9092,10.128.5.11:9092,10.128.5.13:9092");
+        props.put("bootstrap.servers", "10.50.1.197:19092;10.50.1.198:19092;10.50.1.202:19092");
         props.put("acks", "all");
         props.put("retries", 0);
         props.put("batch.size", 16384);
         props.put("linger.ms", 1);
         props.put("buffer.memory", 33554432);
-        props.put("request.timeout.ms",6000);
+        props.put("request.timeout.ms", 6000);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         final Producer<String, String> producer = new KafkaProducer<>(props);
         long startTime = System.nanoTime();
 
-                    for (int i = 0; i < 10000; i++) {
-                        producer.send(new ProducerRecord<>(topicName, Integer.toString(i), Integer.toString(i) + message), new Callback() {
-                            @Override
-                            public void onCompletion(RecordMetadata recordMetadata, Exception e) {
-                                if(e != null)   e.printStackTrace();
-                                System.out.println("The offset of the record we just sent is: " + recordMetadata.offset());
-                            }
-                        });
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+        for (int i = 0; i < 10000; i++) {
+            producer.send(new ProducerRecord<>(topicName, Integer.toString(i), Integer.toString(i) + message), new Callback() {
+                @Override
+                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+                    if (e != null) e.printStackTrace();
+                    System.out.println("The offset of the record we just sent is: " + recordMetadata.offset());
+                }
+            });
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println("发送结束");
         System.out.println("花费时间" + (System.nanoTime() - startTime));
 //        producer.close();
@@ -87,15 +87,15 @@ public class TopicTest {
     }
 
     public static void main(String[] args) {
-        ExecutorService service = Executors.newFixedThreadPool(10000);
+        ExecutorService service = Executors.newFixedThreadPool(10);
 //        deleteTopic("10.128.5.14:2181", "tttest1");
 //        createTopic("10.128.5.14:2181", "tttest1", 1, 2);
-        for(int i = 0; i < 10000; i++){
+        for (int i = 0; i < 1000000000; i++) {
             service.submit(new Runnable() {
                 @Override
                 public void run() {
 //                    for (int i = 0; i < 100; i++) {
-                    sendMessage("tttest1", "测试zookeeper topic节点" + Thread.currentThread());
+                    sendMessage("111111", "测试zookeeper topic节点" + Thread.currentThread());
 //                    }
                 }
             });
