@@ -27,6 +27,8 @@
         <module>gossip</module>
         <module>mongodb</module>
         <module>recommend</module>
+        <module>douuoprovider</module>
+        <module>dubboconsumer</module>
     </modules>
     <packaging>pom</packaging>
 

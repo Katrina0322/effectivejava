@@ -74,8 +74,8 @@ public class EsGet implements Serializable {
 //        System.out.println(service.size());
 
         System.out.println(now.getTime());
-        List<TransInfoBean> transInfo = esGet.getTransFromEs(now.getTime(), "trans-stat-base-");
-        System.out.println(transInfo.size());
+        esGet.connectES(now.getTime(), "ns_news_v1", "newsIndex", JSON.class);
+//        System.out.println(transInfo.size());
     }
 
     public Client getClient() {
@@ -87,18 +87,18 @@ public class EsGet implements Serializable {
      */
     public void setNodeClient() {
 
-        String clusterName = "knowops";
+        String clusterName = "dev_inews2";
 
-        String host = "localhost";
+        String host = "10.45.32.166";
 
         Settings settings = Settings.builder()
                 .put("cluster.name", clusterName)
                 .put("client.transport.ignore_cluster_name", false)
 //                .put("node.client", true)
-                .put("client.transport.sniff", true)
+//                .put("client.transport.sniff", true)
                 .build();
 
-        client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(new InetSocketAddress(host, 9300)));
+        client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(new InetSocketAddress(host, 9500)));
     }
 
 
@@ -179,4 +179,5 @@ public class EsGet implements Serializable {
     private static class LazyHolder implements Serializable {
         private static final EsGet INSTANCE = new EsGet();
     }
+
 }
