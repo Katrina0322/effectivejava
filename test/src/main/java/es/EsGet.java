@@ -1,6 +1,10 @@
 package es;
 
 import com.alibaba.fastjson.JSON;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
@@ -40,43 +44,6 @@ public class EsGet implements Serializable {
         return LazyHolder.INSTANCE;
     }
 
-    public static void main(String[] args) throws ParseException {
-
-
-        SimpleDateFormat esFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-        Calendar now = Calendar.getInstance();
-
-        now.setTime(esFormat.parse(esFormat.format(new Date())));
-        now.setTime(esFormat.parse(esFormat.format(new Date())));
-        now.set(Calendar.SECOND, 0);
-
-        now.add(Calendar.MINUTE, -15);
-        int minute = now.get(Calendar.MINUTE);
-
-        if (minute % 5 != 0) {
-            now.set(Calendar.MINUTE, minute / 5 * 5);
-        }
-        EsGet esGet = EsGet.getInstance();
-        if (esGet.getClient() == null) {
-            esGet.setNodeClient();
-        }
-//        List<HttpInfoBeanJ> value = esGet.connectES(now.getTime(), "http-stat-session-" + format.format(now.getTime()), "noparam_page", HttpInfoBeanJ.class);
-//        System.out.println(value.get(0).toString());
-
-////        List<HttpInfoBeanJ> value3 = EsGet.getInstance().connectES(calendar.getTime(), "http-stat-session-2017.02.13", "noparam_page", HttpInfoBeanJ.class);
-////        System.out.println(value3.get(0).toString());
-//
-//        List<HostBean> value2 = EsGet.getInstance().connectES(now.getTime(), "ni-base-hostname", "base", HostBean.class);
-
-//        System.out.println(value2.get(0).toString());
-
-//        Map<ServiceKey, BaseData> service = esGet.setService(now.getTime(), "ni-base-protocal_type");
-//        System.out.println(service.size());
-
-        System.out.println(now.getTime());
-        esGet.connectES(now.getTime(), "ns_news_v1", "newsIndex", JSON.class);
-//        System.out.println(transInfo.size());
-    }
 
     public Client getClient() {
         return client;
@@ -101,29 +68,24 @@ public class EsGet implements Serializable {
         client = new PreBuiltTransportClient(settings).addTransportAddress(new InetSocketTransportAddress(new InetSocketAddress(host, 9500)));
     }
 
-
-
-    public List<TransInfoBean> getTransFromEs(Date timestamp, String index) {
-        if (client == null) {
-            setNodeClient();
+    public <T> void bulkAdd(String indexName, String indexType, List<T> entityList){
+        BulkRequestBuilder bulkRequest = client.prepareBulk();
+        for(T t:entityList){
+            IndexRequestBuilder indexRequestBuilder = client.prepareIndex(indexName, indexType, "{_id字段}").setSource(t);
+            bulkRequest.add(indexRequestBuilder);
         }
-        return connectES(timestamp, index + format.format(timestamp), "business", TransInfoBean.class);
+        BulkResponse bulkResponse = bulkRequest.get();
+        if (bulkResponse.hasFailures()) {
+            // process failures by iterating through each bulk response item
+        }
+
     }
 
-    /**
-     * get data from ES with giving index,type,and timestamp
-     *
-     * @param timestamp
-     * @param index
-     * @param type
-     * @param clazz
-     * @param <T>
-     * @return
-     */
-    private <T> ArrayList<T> connectES(Date timestamp, String index, String type, Class<T> clazz) {
-        return connectES(timestamp, index, type, "", "", clazz);
-    }
 
+//    private <T> ArrayList<T> connectES(Date timestamp, String index, String type, Class<T> clazz) {
+//        return connectES(timestamp, index, type, "", "", clazz);
+//    }
+//
     public <T> ArrayList<T> connectES(Date timestamp, String index, String type, String key, String val, Class<T> clazz) {
         if (client == null) {
             setNodeClient();
