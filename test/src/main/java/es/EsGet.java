@@ -11,8 +11,10 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -102,6 +104,7 @@ public class EsGet implements Serializable {
         if (!"".equals(key) && !"".equals(val)) {
             scrollResp = client.prepareSearch(index)
                     .setTypes(type).setSearchType(SearchType.QUERY_THEN_FETCH)
+                    .setFetchSource("", "_id")
                     .setPostFilter(QueryBuilders.rangeQuery("start_timestamp").from(start).to(end,false))
                     .setQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery(key, val)))
 //                .setQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("start_timestamp_double", timestamp.getTime() / 1000)))
@@ -135,6 +138,48 @@ public class EsGet implements Serializable {
             }
         }
         return list;
+    }
+
+    public <T> ArrayList<T> getContent(String index, String type, String[] include, String[] exclude, Class<T> clazz){
+        if (client == null) {
+            setNodeClient();
+        }
+        ArrayList<T> list = new ArrayList<>();
+        if (!client.admin().indices().prepareExists(index).execute().actionGet().isExists()) {
+            LOG.warn("index " + index + " not exist");
+            return new ArrayList<>();
+        }
+        SearchResponse scrollResp = client.prepareSearch(index)
+                .setTypes(type).setSearchType(SearchType.QUERY_THEN_FETCH)
+                .setFetchSource(include, exclude)
+                .setScroll(new TimeValue(60000))
+                .setSize(10000).execute().actionGet();
+
+        while (true) {
+            for (SearchHit hit : scrollResp.getHits().getHits()) {
+                System.out.println(hit.getSourceAsString());
+                T value = JSON.parseObject(hit.getSourceAsString(), clazz);
+                list.add(value);
+            }
+
+            scrollResp = client.prepareSearchScroll(scrollResp.getScrollId()).setScroll(new TimeValue(60000)).execute
+                    ().actionGet();
+            //Break condition: No hits are returned
+            if (scrollResp.getHits().getHits().length == 0) {
+                break;
+            }
+
+        }
+        return list;
+    }
+
+
+    public static void main(String[] args) {
+        String[] includes = new String[]{"webpageCode", "content", "noTagContent"};
+        String[] excludes = new String[]{"_id"};
+        List<WebpageTest> list = EsGet.getInstance().getContent("ns_news_v2-2018.06.27", "newsIndex", includes, excludes, WebpageTest.class);
+//        System.out.println(list.toString());
+        System.out.println(list.size());
     }
 
 
