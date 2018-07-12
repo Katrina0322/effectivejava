@@ -29,10 +29,8 @@ public class HBaseUtil {
         conn = ConnectionFactory.createConnection(configuration);
     }
 
-    public void insert(String tableName, String row, String columnFamily,String column,String data) throws IOException {
+    public void insert(String tableName, Put put) throws IOException {
         Table table = conn.getTable(TableName.valueOf(tableName));
-        Put put = new Put(Bytes.toBytes(row));
-        put.addColumn(Bytes.toBytes(columnFamily),Bytes.toBytes(column),Bytes.toBytes(data));
         table.put(put);
     }
 

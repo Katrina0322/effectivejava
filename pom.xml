@@ -19,7 +19,6 @@
         <module>understandJVM</module>
         <module>flinkanalysis</module>
         <module>test</module>
-        <module>cluster_install</module>
         <module>mymvc</module>
         <module>dapper</module>
         <module>tomcat</module>
@@ -27,8 +26,9 @@
         <module>gossip</module>
         <module>mongodb</module>
         <module>recommend</module>
-        <module>douuoprovider</module>
         <module>dubboconsumer</module>
+        <module>k8s</module>
+        <module>kvm-libvirt</module>
     </modules>
     <packaging>pom</packaging>
 
