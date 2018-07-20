@@ -29,6 +29,7 @@
         <module>dubboconsumer</module>
         <module>k8s</module>
         <module>kvm-libvirt</module>
+        <module>esToHbase</module>
     </modules>
     <packaging>pom</packaging>
 
