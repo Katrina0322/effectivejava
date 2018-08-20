@@ -1,0 +1,64 @@
+[I 22:01:56.746 NotebookApp] Serving notebooks from local directory: /home/spark/workspace/effectivejava/pyml
+[I 22:01:56.746 NotebookApp] 0 active kernels
+[I 22:01:56.746 NotebookApp] The Jupyter Notebook is running at:
+[I 22:01:56.746 NotebookApp] http://localhost:8888/?token=6e663e5ce209612a6bcbcb401825698c9ab458cf3c6e1868
+[I 22:01:56.746 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 22:01:56.748 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:8888/?token=6e663e5ce209612a6bcbcb401825698c9ab458cf3c6e1868&token=6e663e5ce209612a6bcbcb401825698c9ab458cf3c6e1868
+[I 22:01:57.358 NotebookApp] Accepting one-time-token-authenticated connection from 127.0.0.1
+Created new window in existing browser session.
+[I 22:02:02.822 NotebookApp] Kernel started: 3ab646b0-c3b6-4f1a-8501-a201276e42e5
+[I 22:02:03.321 NotebookApp] Adapting to protocol v5.1 for kernel 3ab646b0-c3b6-4f1a-8501-a201276e42e5
+2811
+2811
+66666
+2811
+66666
+2811
+66666
+666
+[I 22:04:02.772 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:06:02.778 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:08:02.768 NotebookApp] Saving file at /Untitled.ipynb
+[I 15:23:26.664 NotebookApp] Saving file at /Untitled.ipynb
+[I 15:23:28.294 NotebookApp] Starting buffering for 3ab646b0-c3b6-4f1a-8501-a201276e42e5:fe3f93077c4d47a38e168ae4c639fa51
+[I 15:23:34.396 NotebookApp] Kernel shutdown: 3ab646b0-c3b6-4f1a-8501-a201276e42e5
+[I 15:25:18.789 NotebookApp] Kernel started: 72e3ccc8-dac3-4239-965d-2bcc33b6da43
+[I 15:25:21.287 NotebookApp] Adapting to protocol v5.1 for kernel 72e3ccc8-dac3-4239-965d-2bcc33b6da43
+[I 15:27:18.789 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 15:29:18.790 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 15:31:18.790 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 15:33:18.787 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 15:35:18.789 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 15:41:18.787 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 15:43:00.828 NotebookApp] Starting buffering for 72e3ccc8-dac3-4239-965d-2bcc33b6da43:42b0720e26e342d892922d3854cbebb5
+[I 15:46:49.889 NotebookApp] Adapting to protocol v5.1 for kernel 72e3ccc8-dac3-4239-965d-2bcc33b6da43
+[I 15:48:49.849 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 17:47:39.048 NotebookApp] Starting buffering for 72e3ccc8-dac3-4239-965d-2bcc33b6da43:d003568409b44648917c85bd23512193
+[I 17:47:42.623 NotebookApp] Kernel shutdown: 72e3ccc8-dac3-4239-965d-2bcc33b6da43
+[I 19:20:18.993 NotebookApp] Kernel started: ec73b8b3-e31a-4d7c-9637-7f77c7bdf71d
+[I 19:20:21.774 NotebookApp] Adapting to protocol v5.1 for kernel ec73b8b3-e31a-4d7c-9637-7f77c7bdf71d
+[I 19:22:18.978 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:28:18.981 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:30:18.977 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:32:18.976 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:34:18.977 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:36:18.976 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:38:18.977 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:40:18.984 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:42:18.977 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:44:18.978 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:46:18.976 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:48:18.978 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 19:48:28.557 NotebookApp] Starting buffering for ec73b8b3-e31a-4d7c-9637-7f77c7bdf71d:a50c1a34abf641b98003daa8cc79610e
+[I 19:48:32.840 NotebookApp] Kernel shutdown: ec73b8b3-e31a-4d7c-9637-7f77c7bdf71d
+[I 22:13:01.578 NotebookApp] Kernel started: 47b314a8-10b9-4391-8f4d-dec2e36b5cb8
+[I 22:13:02.214 NotebookApp] Adapting to protocol v5.1 for kernel 47b314a8-10b9-4391-8f4d-dec2e36b5cb8
+[I 22:15:01.572 NotebookApp] Saving file at /com/search/dubbo.ipynb
+[I 09:42:48.627 NotebookApp] Starting buffering for 47b314a8-10b9-4391-8f4d-dec2e36b5cb8:561afd4a1aa647ec859c14b321ad6057
+[I 09:42:51.686 NotebookApp] Kernel shutdown: 47b314a8-10b9-4391-8f4d-dec2e36b5cb8
+[C 10:37:13.994 NotebookApp] received signal 15, stopping
+[I 10:37:26.714 NotebookApp] Shutting down 0 kernels
